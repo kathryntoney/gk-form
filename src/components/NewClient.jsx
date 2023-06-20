@@ -1,21 +1,21 @@
-import { useState, useDispatch } from 'react'
+import { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import { addDoc, collection } from 'firebase/firestore'
-import DisplayClients from './DisplayClients';
 import { db } from '../firebase'
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore } from 'redux-persist'
-import { useHistory } from 'react-router-dom'
+import { addNewClient } from '../actions/newClientActions';
 
-export default function NewClient() {
-    const dispatch = useDispatch()
+export default function NewClient({ clientID }) {
     const [selectedApplicantType, setSelectedApplicantType] = useState('')
+    const [complete, setComplete] = useState(false)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const colRef = collection(db, 'clients')
     const [client, setClient] = useState({
         firstName: '',
@@ -29,8 +29,6 @@ export default function NewClient() {
         referPhone: '',
         informed: ''
     })
-
-    const clientList = useSelector(state => state.clients)
 
     const handleApplicantTypeChange = (e) => {
         setSelectedApplicantType(e.target.value)
@@ -50,7 +48,9 @@ export default function NewClient() {
             const docRef = await addDoc(colRef, {
                 client: client,
             })
-            console.log('document written with ID:', docRef.id)
+            console.log('document written with ID NewClient:', docRef.id)
+            dispatch(addNewClient(client, docRef.id))
+            navigate('/crisis')
         } catch (error) {
             console.log('error adding document: ', error)
         }
@@ -180,7 +180,6 @@ export default function NewClient() {
                 </Select>
                 <Button variant='contained' onClick={createNewClient}>Continue</Button>
             </form>
-            <DisplayClients />
         </Box>
     )
 }
