@@ -13,7 +13,6 @@ import { addNewClient } from '../actions/newClientActions';
 
 export default function NewClient({ clientID }) {
     const [selectedApplicantType, setSelectedApplicantType] = useState('')
-    const [complete, setComplete] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const colRef = collection(db, 'clients')
@@ -50,7 +49,7 @@ export default function NewClient({ clientID }) {
             })
             console.log('document written with ID NewClient:', docRef.id)
             dispatch(addNewClient(client, docRef.id))
-            navigate('/crisis')
+            navigate('/crisis', { state: { clientID: docRef.id } })
         } catch (error) {
             console.log('error adding document: ', error)
         }
