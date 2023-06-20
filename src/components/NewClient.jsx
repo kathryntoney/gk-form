@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useDispatch } from 'react'
 import { Box, Typography } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel';
@@ -8,10 +8,15 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux'
 import { addDoc, collection } from 'firebase/firestore'
 import DisplayClients from './DisplayClients';
-import {db} from '../firebase'
+import { db } from '../firebase'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+import { useHistory } from 'react-router-dom'
 
 export default function NewClient() {
+    const dispatch = useDispatch()
     const [selectedApplicantType, setSelectedApplicantType] = useState('')
+    const colRef = collection(db, 'clients')
     const [client, setClient] = useState({
         firstName: '',
         lastName: '',
@@ -24,7 +29,7 @@ export default function NewClient() {
         referPhone: '',
         informed: ''
     })
-    // const dispatch = useDispatch()
+
     const clientList = useSelector(state => state.clients)
 
     const handleApplicantTypeChange = (e) => {
@@ -49,18 +54,6 @@ export default function NewClient() {
         } catch (error) {
             console.log('error adding document: ', error)
         }
-        // dispatch(addNewClient(
-        //     client.firstName,
-        //     client.lastName,
-        //     client.email,
-        //     client.phone,
-        //     client.language,
-        //     client.pronouns,
-        //     client.referName,
-        //     client.referEmail,
-        //     client.referPhone,
-        //     client.informed
-        // ))
     }
 
     return (
@@ -109,9 +102,9 @@ export default function NewClient() {
                         <Select
                             labelId="demo-simple-select-label"
                             id="applicant-type-select"
-                            value={client.applicant}
-                            name="applicant"
-                            label="Applicant"
+                            value={client.informed}
+                            name="informed"
+                            label="Informed"
                             onChange={handleChange}
                         >
                             <MenuItem value="yes">Yes</MenuItem>

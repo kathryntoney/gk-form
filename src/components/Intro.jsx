@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import NewClient from './NewClient';
+import DisplayClients from './DisplayClients';
 
 export default function Intro() {
     const [selectedEmploymentStatus, setSelectedEmploymentStatus] = useState('')
@@ -73,6 +74,7 @@ export default function Intro() {
                     </>
                 )}
             </form >
+            <DisplayClients />
         </Box >
     )
 }
