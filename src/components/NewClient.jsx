@@ -5,12 +5,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import { useDispatch, useSelector } from 'react-redux'
-// import { addNewClient } from '../actions/newClientActions';
-import ClientItem from './ClientItem';
-import { collection, addDoc } from 'firebase/firestore'
-import { db } from '../firebase'
+import { useSelector } from 'react-redux'
+import { addDoc, collection } from 'firebase/firestore'
 import DisplayClients from './DisplayClients';
+import {db} from '../firebase'
 
 export default function NewClient() {
     const [selectedApplicantType, setSelectedApplicantType] = useState('')
@@ -44,7 +42,7 @@ export default function NewClient() {
     const createNewClient = async (e) => {
         e.preventDefault();
         try {
-            const docRef = await addDoc(collection(db, 'clients'), {
+            const docRef = await addDoc(colRef, {
                 client: client,
             })
             console.log('document written with ID:', docRef.id)

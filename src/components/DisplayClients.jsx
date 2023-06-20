@@ -11,7 +11,6 @@ export default function DisplayClients() {
         const getClientList = async () => {
             try {
                 const data = await getDocs(colRef)
-                console.log(data)
                 const clientData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
                 setClientList(clientData)
             }

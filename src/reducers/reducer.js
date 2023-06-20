@@ -1,19 +1,46 @@
-// import clients from '../data/clients'
+import { collection } from 'firebase/firestore'
+import { db } from '../firebase'
 
 const reducer = (state, action) => {
     if (state === undefined) {
         state = {
-            clients: clients,
-            count: clients.length
+            clients: []
         }
     }
     switch (action.type) {
         case "ADD_NEW_CLIENT":
-            return {
-                ...state,
-                clients: state.clients.concat(action.data),
-                count: state.count + action.data
-            }
+            const {
+                firstName,
+                lastName,
+                email,
+                phone,
+                language,
+                pronouns,
+                referName,
+                referEmail,
+                referPhone,
+                informed
+            } = action;
+            const newClient = {
+                firstName,
+                lastName,
+                email,
+                phone,
+                language,
+                pronouns,
+                referName,
+                referEmail,
+                referPhone,
+                informed
+            };
+            addDoc(collection(db, 'clients'), newClient)
+                .then((docRef) => {
+                    console.log('document written with id: ', docRef.id)
+                })
+                .catch((error) => {
+                    console.log('error adding document: ', error)
+                })
+            return state;
         default:
             return state;
     }
