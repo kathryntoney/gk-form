@@ -3,42 +3,40 @@ import { Box } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import HousingCrisis from './HousingCrisis'
 
 export default function CrisisSelection() {
-    const [selectedCrisis, setSelectedCrisis] = useState('')
+    const [crisisType, setCrisisType] = useState('')
     const [statement, setStatement] = useState('')
 
-    const handleSetSelectedCrisis = (e) => {
-        const { name, value } = e.target;
-        setSelectedCrisis((prevCrisis) => ({
-            ...prevCrisis,
-            [name]: value
-        }))
+    const handleSetCrisisType = (e) => {
+        console.log(clientID)
+        const { value } = e.target;
+        setCrisisType(value)
     }
 
     const handleSetStatement = (e) => {
         setStatement(e.target.value)
     }
 
-
     return (
         <>
             <Box>
                 <form>
-                    <InputLabel id="preferred-language">Which of the following categories best describes the crisis you / your referrer are experiencing?</InputLabel>
+                    <InputLabel id="preferred-language">Which of the following categories best describes the crisis you (or the person you are referring) are experiencing?</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={client.selectedCrisis}
+                        value={crisisType}
                         name="crisisType"
                         label="Crisis Type"
-                        onChange={handleSetSelectedCrisis}
+                        onChange={handleSetCrisisType}
                     >
                         <MenuItem value="Housing disaster">Housing disaster</MenuItem>
-                        <MenuItem value="Illness/injury (physical or mental)">Illness/injury (physical or mental)</MenuItem>
+                        {/* <MenuItem value="Illness/injury (physical or mental)">Illness/injury (physical or mental)</MenuItem>
                         <MenuItem value="Illness (substance)">Illness (substance)</MenuItem>
                         <MenuItem value="Funeral">Funeral</MenuItem>
-                        <MenuItem value="Other">Other</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem> */}
                     </Select>
                     {crisisType === 'Other' && (
                         <>
@@ -48,7 +46,7 @@ export default function CrisisSelection() {
                                 label="First Name"
                                 variant="outlined"
                                 onChange={handleSetStatement}
-                                value={client.statement}
+                                value={statement}
                                 name="firstName"
                             />
                         </>
@@ -58,7 +56,7 @@ export default function CrisisSelection() {
                             <HousingCrisis />
                         </>
                     )}
-                    {crisisType === 'Illness/injury (physical or mental)' && (
+                    {/* {crisisType === 'Illness/injury (physical or mental)' && (
                         <>
                             <IllnessCrisis />
                         </>
@@ -72,7 +70,7 @@ export default function CrisisSelection() {
                         <>
                             <FuneralCrisis />
                         </>
-                    )}
+                    )} */}
                 </form>
             </Box>
         </>

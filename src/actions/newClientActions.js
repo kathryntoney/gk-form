@@ -1,20 +1,20 @@
-import { v4 as uuidv4 } from 'uuid';
 
-export const addNewClient = (firstName, lastName, email, phone, language, pronouns, referName, referEmail, referPhone, informed) => {
+export const addNewClient = (client, clientID) => {
+    console.log(client, clientID)
     return {
         type: "ADD_NEW_CLIENT",
         data: {
-            id: uuidv4(),
-            firstName,
-            lastName,
-            email,
-            phone,
-            language,
-            pronouns,
-            referName,
-            referEmail,
-            referPhone,
-            informed
+            clientID: clientID,
+            firstName: client.firstName,
+            lastName: client.lastName,
+            email: client.email,
+            phone: client.phone,
+            language: client.language,
+            pronouns: client.pronouns,
+            referName: client.referName,
+            referEmail: client.referEmail,
+            referPhone: client.referPhone,
+            informed: client.informed
         }
     }
 }
