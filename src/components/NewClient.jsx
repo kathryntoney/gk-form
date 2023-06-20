@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ClientItem from './ClientItem';
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import DisplayClients from './DisplayClients';
 
 export default function NewClient() {
     const [selectedApplicantType, setSelectedApplicantType] = useState('')
@@ -188,13 +189,7 @@ export default function NewClient() {
                 </Select>
                 <Button variant='contained' onClick={createNewClient}>Continue</Button>
             </form>
-            <ul>
-                <li>
-                    {clientList.map(clientObj => {
-                        return <ClientItem key={clientObj.id} clientObj={clientObj} />
-                    })}
-                </li>
-            </ul>
+            <DisplayClients />
         </Box>
     )
 }
