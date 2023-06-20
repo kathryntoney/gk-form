@@ -1,9 +1,26 @@
-export const setCrisisType = (clientID) => {
-    console.log(clientID)
+import { doc, collection, updateDoc } from 'firebase/firestore'
+
+export const setCrisisType = async (clientID, crisisType) => {
+    // const clientsRef = db.collection('clients').doc(clientID)
     return {
         type: "SET_CRISIS_TYPE",
         data: {
-            crisisType: client.clientID.crisisType
+            clientID,
+            crisisType
+        }
+    }
+}
+
+export const setCrisisDetails = (clientID, statement, timeframe, crisisDate, cause, currentHousing) => {
+    console.log(clientID)
+    return {
+        type: 'SET_CRISIS_DETAILS',
+        data: {
+            statement,
+            timeframe,
+            crisisDate,
+            cause,
+            currentHousing
         }
     }
 }

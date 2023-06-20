@@ -3,8 +3,28 @@ import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import { doc, updateDoc } from 'firebase/firestore'
+import { db } from '../firebase'
+import { useState } from 'react'
 
 export default function HousingCrisis() {
+    const [updateClient, setUpdateClient] = useState({
+        statement: '',
+        timeframe: '',
+        crisisDate: '',
+        cause: '',
+        currentHousing: ''
+    })
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUpdateClient((client) => ({
+            ...client,
+            [name]: value
+        }))
+    }
+
+
     return (
         <>
             <Box>

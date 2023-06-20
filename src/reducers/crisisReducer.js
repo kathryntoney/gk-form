@@ -3,11 +3,11 @@ const crisisReducer = (state, action) => {
     console.log('inside crisis reducer')
     if (state === undefined) {
         state = {
-            crisis: ''
+            crisisType: ''
         }
         console.log(state)
     }
-    console.log(action.type)
+    console.log('crisis reducer action: ', action.type)
     switch (action.type) {
         case "SET_CRISIS_TYPE":
             console.log('inside select crisis', action)

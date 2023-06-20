@@ -23,6 +23,7 @@
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
     "redux-root-reducer": "^0.0.6",
+    "redux-thunk": "^2.4.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
