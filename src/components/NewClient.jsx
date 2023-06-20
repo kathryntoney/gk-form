@@ -6,8 +6,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux'
-import { addNewClient } from '../actions/newClientActions';
+// import { addNewClient } from '../actions/newClientActions';
 import ClientItem from './ClientItem';
+import { collection, addDoc } from 'firebase/firestore'
+import { db } from '../firebase'
+import DisplayClients from './DisplayClients';
 
 export default function NewClient() {
     const [selectedApplicantType, setSelectedApplicantType] = useState('')
@@ -23,7 +26,7 @@ export default function NewClient() {
         referPhone: '',
         informed: ''
     })
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const clientList = useSelector(state => state.clients)
 
     const handleApplicantTypeChange = (e) => {
@@ -38,21 +41,28 @@ export default function NewClient() {
         }))
     }
 
-    const createNewClient = (e) => {
+    const createNewClient = async (e) => {
         e.preventDefault();
-        // console.log(client)
-        dispatch(addNewClient(
-            client.firstName,
-            client.lastName,
-            client.email,
-            client.phone,
-            client.language,
-            client.pronouns,
-            client.referName,
-            client.referEmail,
-            client.referPhone,
-            client.informed
-        ))
+        try {
+            const docRef = await addDoc(collection(db, 'clients'), {
+                client: client,
+            })
+            console.log('document written with ID:', docRef.id)
+        } catch (error) {
+            console.log('error adding document: ', error)
+        }
+        // dispatch(addNewClient(
+        //     client.firstName,
+        //     client.lastName,
+        //     client.email,
+        //     client.phone,
+        //     client.language,
+        //     client.pronouns,
+        //     client.referName,
+        //     client.referEmail,
+        //     client.referPhone,
+        //     client.informed
+        // ))
     }
 
     return (
@@ -179,13 +189,7 @@ export default function NewClient() {
                 </Select>
                 <Button variant='contained' onClick={createNewClient}>Continue</Button>
             </form>
-            <ul>
-                <li>
-                    {clientList.map(clientObj => {
-                        return <ClientItem key={clientObj.id} clientObj={clientObj} />
-                    })}
-                </li>
-            </ul>
+            <DisplayClients />
         </Box>
     )
 }

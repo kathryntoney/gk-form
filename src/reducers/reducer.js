@@ -1,4 +1,4 @@
-import clients from '../data/clients'
+// import clients from '../data/clients'
 
 const reducer = (state, action) => {
     if (state === undefined) {
