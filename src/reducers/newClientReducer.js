@@ -1,10 +1,12 @@
 import { collection } from 'firebase/firestore'
 import { db } from '../firebase'
 
+
 const reducer = (state, action) => {
     if (state === undefined) {
         state = {
-            clients: []
+            clients: [],
+            clientID: ''
         }
     }
     switch (action.type) {

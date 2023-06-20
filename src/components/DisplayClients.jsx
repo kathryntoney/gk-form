@@ -25,11 +25,11 @@ export default function DisplayClients() {
         <>
             < div >
                 <ul>
-                    <li>
-                        {clientList.map(clientObj => {
-                            return <ClientItem key={clientObj.id} clientObj={clientObj} />
-                        })}
-                    </li>
+                    {clientList.map(client => {
+                        <li>
+                            {client.firstName} {client.lastName}
+                        </li>
+                    })}
                 </ul>
             </div >
         </>

@@ -1,5 +1,6 @@
  import './App.css'
  import Intro from './components/Intro'
+ import CrisisSelection from './components/CrisisSelection'
 
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
   return (
     <>
       <Intro />
+      <CrisisSelection />
     </>
   )
 }
