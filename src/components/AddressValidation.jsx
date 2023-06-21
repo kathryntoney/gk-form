@@ -1,12 +1,19 @@
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import TextField from '@mui/material/TextField'
-
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
+import { setCrisisDetails } from '../actions/crisisActions';
+
 
 export default function AddressValidation() {
+    const dispatch = useDispatch()
+    const clientID = useSelector(state => state.clients.clientID)
+    console.log('line15 ', clientID)
+    const [address, setAddress] = useState('')
     const {
         ready,
         value,
@@ -29,13 +36,22 @@ export default function AddressValidation() {
     const handleSelect =
         ({ description }) =>
             () => {
+                console.log(description)
                 setValue(description, false);
                 clearSuggestions();
                 getGeocode({ address: description }).then((results) => {
                     const { lat, lng } = getLatLng(results[0]);
                     console.log("📍 Coordinates: ", { lat, lng });
                     setAddress(description)
+                    dispatch(setCrisisDetails(
+                        {
+                            clientID,
+                            address: description
+                        }
+                    ))
+                    // console.log('line 46 set address: ', address)
                 });
+
             };
 
     const renderSuggestions = () =>

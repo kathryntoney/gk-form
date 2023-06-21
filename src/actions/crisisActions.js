@@ -10,7 +10,7 @@ export const setCrisisType = async (clientID, crisisType) => {
     }
 }
 
-export const setCrisisDetails = (clientID, statement, timeframe, crisisDate, cause, currentHousing) => {
+export const setCrisisDetails = (clientID, statement, timeframe, crisisDate, cause, currentHousing, address) => {
     console.log(clientID)
     return {
         type: 'SET_CRISIS_DETAILS',
@@ -20,7 +20,8 @@ export const setCrisisDetails = (clientID, statement, timeframe, crisisDate, cau
             timeframe,
             crisisDate,
             cause,
-            currentHousing
+            currentHousing,
+            address
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { setCrisisDetails } from '../actions/crisisActions';
 import usePlacesAutocomplete, {
@@ -117,112 +117,91 @@ export default function HousingCrisis() {
     return (
         <>
             <Box>
-                <br />
-                <div>
-                    <InputLabel id="applicant-type-label">Please describe your crisis in detail using the field below:</InputLabel>
-                    <TextField
-                        id="outlined-basic"
-                        label="Statement of Need"
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={updateClient.statement}
-                        name="statement"
-                    />
-                </div>
-                <br />
-                <div>
-                    <InputLabel id="applicant-type-label">Did this disaster occur within the last six months?</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="applicant-type-select"
-                        value={updateClient.timeframe}
-                        name="timeframe"
-                        label="Timeframe"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="yes">Yes, within the last six months</MenuItem>
-                        <MenuItem value="no">No, it occurred more than six months ago</MenuItem>
-                    </Select>
-                </div>
-                <br />
+                <h3>In the field below, please describe your crisis in detail.</h3>
+                <TextField
+                    id="outlined-basic"
+                    label="Statement of Need"
+                    variant="outlined"
+                    onChange={handleChange}
+                    value={updateClient.statement}
+                    name="statement"
+                />
+                <InputLabel id="applicant-type-label">Did this disaster occur within the last six months?</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="applicant-type-select"
+                    value={updateClient.timeframe}
+                    name="timeframe"
+                    label="Timeframe"
+                    onChange={handleChange}
+                >
+                    <MenuItem value="yes">Yes, within the last six months</MenuItem>
+                    <MenuItem value="no">No, it occurred more than six months ago</MenuItem>
+                </Select>
                 {updateClient.timeframe === 'no' && (
                     <p>Unfortunately, you are not eligible for financial assistance from Giving Kitchen at this time. But this doesn't mean you can't still get help - please refer to our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> page to find more resources. </p>
                 )}
-                <div>
-                    <InputLabel id="applicant-type-label">Enter the approximate date that your crisis occurred:</InputLabel>
-                    <TextField
-                        id="outlined-basic"
-                        label="Date of Crisis"
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={updateClient.crisisDate}
-                        name="crisisDate"
-                    />
-                </div>
-                <br />
-                <div>
-                    <InputLabel id="applicant-type-label">Which of the following best describes what happened to your housing?</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="applicant-type-select"
-                        value={updateClient.cause}
-                        name="cause"
-                        label="Cause of Disaster"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="Fire">Fire</MenuItem>
-                        <MenuItem value="Flood">Flood</MenuItem>
-                        <MenuItem value="Mold">Mold</MenuItem>
-                        <MenuItem value="Tornado">Tornado</MenuItem>
-                        <MenuItem value="Other">Other</MenuItem>
-                        <MenuItem value="None, not experiencing a housing crisis">None, not experiencing a housing crisis</MenuItem>
-                    </Select>
-                </div>
-                <br />
+                <TextField
+                    id="outlined-basic"
+                    label="Enter the approximate date that your crisis occurred"
+                    variant="outlined"
+                    onChange={handleChange}
+                    value={updateClient.crisisDate}
+                    name="crisisDate"
+                />
+                <InputLabel id="applicant-type-label">Which of the following best describes what happened to your housing?</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="applicant-type-select"
+                    value={updateClient.cause}
+                    name="cause"
+                    label="Cause of Disaster"
+                    onChange={handleChange}
+                >
+                    <MenuItem value="Fire">Fire</MenuItem>
+                    <MenuItem value="Flood">Flood</MenuItem>
+                    <MenuItem value="Mold">Mold</MenuItem>
+                    <MenuItem value="Tornado">Tornado</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                    <MenuItem value="None, not experiencing a housing crisis">None, not experiencing a housing crisis</MenuItem>
+                </Select>
                 {updateClient.cause === 'None, not experiencing a housing crisis' && (
                     <p>Unfortunately, you are not eligible for financial assistance from Giving Kitchen at this time. But this doesn't mean you can't still get help - please refer to our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> page to find more resources. </p>
                 )}
                 {updateClient.cause === 'Other' && (
                     <p>Redirect to Financial Award Process / Injury/Illness Application</p>
                 )}
-                <div>
-                    <InputLabel id="applicant-type-label">Have you found a new place to live?</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="applicant-type-select"
-                        value={updateClient.currentHousing}
-                        name="currentHousing"
-                        label="Current Housing"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="Yes">Yes</MenuItem>
-                        <MenuItem value="No">No</MenuItem>
-                    </Select>
-                </div>
-                <br />
-                <div>
-                    <InputLabel id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
-                    <TextField
-                        id="outlined-basic"
-                        label="Address"
-                        variant="outlined"
-                        onChange={handleInput}
-                        value={value}
-                        name="address"
-                    />
-                </div>
-                <br />
+                <InputLabel id="applicant-type-label">Have you found a new place to live?</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="applicant-type-select"
+                    value={updateClient.currentHousing}
+                    name="currentHousing"
+                    label="Current Housing"
+                    onChange={handleChange}
+                >
+                    <MenuItem value="Yes">Yes</MenuItem>
+                    <MenuItem value="No">No</MenuItem>
+                </Select>
+                <TextField
+                    id="outlined-basic"
+                    label="Address"
+                    variant="outlined"
+                    onChange={handleInput}
+                    value={updateClient.address}
+                    name="address"
+                />
                 {status === "OK" && <ul>{renderSuggestions()}</ul>}
+
+                {updateClient.currentHousing === 'Yes' && (
+                    <p>Redirect to Financial Award Process / Disaster Application</p>
+                )}
+                {updateClient.currentHousing === 'No' && (
+                    <p>Redirect to Stability Network Process and Crisis Financial Aid Application</p>
+                )}
                 <Button variant='contained' onClick={handleUpdateClientDoc}>Exit</Button>
-                <>
-                    {updateClient.address === 'Yes' && (
-                        <p>Redirect to Financial Award Process / Disaster Application</p>
-                    )}
-                    {updateClient.address === 'No' && (
-                        <p>Redirect to Stability Network Process and Crisis Financial Aid Application</p>
-                    )}
-                </>
             </Box>
         </>
     )
 }
+
