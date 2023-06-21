@@ -12,7 +12,7 @@ import { db } from '../firebase'
 import { addNewClient } from '../actions/newClientActions';
 
 export default function NewClient({ clientID }) {
-    const [selectedApplicantType, setSelectedApplicantType] = useState('')
+    const [selectedApplicantType, setSelectedApplicantType] = useState('Myself')
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const colRef = collection(db, 'clients')
@@ -21,12 +21,12 @@ export default function NewClient({ clientID }) {
         lastName: '',
         email: '',
         phone: '',
-        language: '',
-        pronouns: '',
+        language: 'English',
+        pronouns: 'Pronouns',
         referName: '',
         referEmail: '',
         referPhone: '',
-        informed: ''
+        informed: 'Yes'
     })
 
     const handleApplicantTypeChange = (e) => {
@@ -56,127 +56,174 @@ export default function NewClient({ clientID }) {
     }
 
     return (
-        <Box>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            m: 3
+        }}>
             <form>
-                <InputLabel id="applicant type">For whom are you filling out this form?</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={selectedApplicantType}
-                    label="Applicant"
-                    onChange={handleApplicantTypeChange}
-                >
-                    <MenuItem value="Myself">Myself</MenuItem>
-                    <MenuItem value="Someone else">Someone else</MenuItem>
-                </Select>
+                <div>
+                    <InputLabel id="applicant type">For whom are you filling out this form?</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={selectedApplicantType}
+                        label="Applicant"
+                        onChange={handleApplicantTypeChange}
+                    >
+                        <MenuItem value="Myself">Myself</MenuItem>
+                        <MenuItem value="Someone else">Someone else</MenuItem>
+                    </Select>
+                </div>
+                <br />
                 {/* IF REFERRING SOMEONE ELSE - REFERRER INFO */}
                 {selectedApplicantType === 'Someone else' && (
                     <>
-                        <Typography variant='h5'>If you are filling out this form for someone else, please enter your own contact information here:</Typography>
-                        <TextField
-                            id="outlined-basic"
-                            label="Referrer Name (first and last)"
-                            variant="outlined"
-                            onChange={handleChange}
-                            value={client.referName}
-                            name="referName"
-                        />
-                        <TextField
-                            id="outlined-basic"
-                            label="Referrer Email"
-                            variant="outlined"
-                            onChange={handleChange}
-                            value={client.referEmail}
-                            name="referEmail"
-                        />
-                        <TextField
-                            id="outlined-basic"
-                            label="Referrer Phone"
-                            variant="outlined"
-                            onChange={handleChange}
-                            value={client.referPhone}
-                            name="referPhone"
-                        />
-                        <InputLabel id="applicant-type-label">Have you informed this person that you're referring them to GK?</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="applicant-type-select"
-                            value={client.informed}
-                            name="informed"
-                            label="Informed"
-                            onChange={handleChange}
-                        >
-                            <MenuItem value="yes">Yes</MenuItem>
-                            <MenuItem value="no">No</MenuItem>
-                        </Select>
+                        <div>
+                            <Typography variant='h5'>If you are filling out this form for someone else, please enter your own contact information here:</Typography>
+                            <TextField
+                                id="outlined-basic"
+                                label="Referrer Name (first and last)"
+                                variant="outlined"
+                                onChange={handleChange}
+                                value={client.referName}
+                                name="referName"
+                            />
+                        </div>
+                        <br />
+                        <div>
+                            <TextField
+                                id="outlined-basic"
+                                label="Referrer Email"
+                                type="email"
+                                variant="outlined"
+                                onChange={handleChange}
+                                value={client.referEmail}
+                                name="referEmail"
+                            />
+                        </div>
+                        <br />
+                        <div>
+                            <TextField
+                                id="outlined-basic"
+                                label="Referrer Phone"
+                                variant="outlined"
+                                onChange={handleChange}
+                                value={client.referPhone}
+                                type="number"
+                                name="referPhone"
+                            />
+                        </div>
+                        <br />
+                        <div>
+                            <InputLabel id="applicant-type-label">Have you informed this person that you're referring them to GK?</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="applicant-type-select"
+                                value={client.informed}
+                                name="informed"
+                                label="Informed"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value="Yes">Yes</MenuItem>
+                                <MenuItem value="No">No</MenuItem>
+                            </Select>
+                        </div>
+                        <br />
                     </>
                 )
                 }
-                <InputLabel id="preferred-language">Preferred language of person in need:</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={client.language}
-                    name="language"
-                    label="Preferred Language"
-                    onChange={handleChange}
-                >
-                    <MenuItem value="English">English</MenuItem>
-                    <MenuItem value="Spanish">Spanish</MenuItem>
-                    <MenuItem value="Cantonese">Cantonese</MenuItem>
-                    <MenuItem value="Korean">Korean</MenuItem>
-                    <MenuItem value="Mandarin">Mandarin</MenuItem>
-                    <MenuItem value="Portuguese">Portuguese</MenuItem>
-                    <MenuItem value="Vietnamese">Vietnamese</MenuItem>
-                    <MenuItem value="Other">Other</MenuItem>
-                </Select>
-                <TextField
-                    id="outlined-basic"
-                    label="First Name"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={client.firstName}
-                    name="firstName"
-                />
-                <TextField
-                    id="outlined-basic"
-                    label="Last Name"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={client.lastName}
-                    name="lastName"
-                />
-                <TextField
-                    id="outlined-basic"
-                    label="Email"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={client.email}
-                    name="email"
-                />
-                <TextField
-                    id="outlined-basic"
-                    label="Phone Number"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={client.phone}
-                    name="phone"
-                />
-                <InputLabel id="preferred-pronouns">Preferred pronouns:</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={client.pronouns}
-                    name="pronouns"
-                    label="Preferred Pronouns"
-                    onChange={handleChange}
-                >
-                    <MenuItem disabled value="Pronouns">Pronouns</MenuItem>
-                    <MenuItem value="She/her/hers">She/her/hers</MenuItem>
-                    <MenuItem value="He/Him/his">He/Him/his</MenuItem>
-                    <MenuItem value="They/them/theirs">They/them/theirs</MenuItem>
-                    <MenuItem value="Other">Other</MenuItem>
-                </Select>
+                <div>
+                    <InputLabel id="preferred-language">Preferred language of person in need:</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={client.language}
+                        name="language"
+                        label="Preferred Language"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value="English">English</MenuItem>
+                        <MenuItem value="Spanish">Spanish</MenuItem>
+                        <MenuItem value="Cantonese">Cantonese</MenuItem>
+                        <MenuItem value="Korean">Korean</MenuItem>
+                        <MenuItem value="Mandarin">Mandarin</MenuItem>
+                        <MenuItem value="Portuguese">Portuguese</MenuItem>
+                        <MenuItem value="Vietnamese">Vietnamese</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
+                    </Select>
+                </div>
+                <br />
+                <div>
+                    <TextField
+                        id="outlined-basic"
+                        label="First Name"
+                        variant="outlined"
+                        required
+                        onChange={handleChange}
+                        value={client.firstName}
+                        name="firstName"
+                    />
+                </div>
+                <br />
+                <div>
+                    <TextField
+                        id="outlined-basic"
+                        label="Last Name"
+                        variant="outlined"
+                        required
+                        onChange={handleChange}
+                        value={client.lastName}
+                        name="lastName"
+                    />
+                </div>
+                <br />
+                <div>
+                    <TextField
+                        id="outlined-basic"
+                        label="Email"
+                        type="email"
+                        variant="outlined"
+                        required
+                        onChange={handleChange}
+                        value={client.email}
+                        name="email"
+                    />
+                </div>
+                <br />
+                <div>
+                    <TextField
+                        id="outlined-basic"
+                        label="Phone Number"
+                        type="number"
+                        variant="outlined"
+                        required
+                        onChange={handleChange}
+                        value={client.phone}
+                        name="phone"
+                    />
+                </div>
+                <br />
+                <div>
+                    <InputLabel id="preferred-pronouns">Preferred pronouns:</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={client.pronouns}
+                        name="pronouns"
+                        label="Preferred Pronouns"
+                        onChange={handleChange}
+                    >
+                        <MenuItem disabled value="Pronouns">Pronouns</MenuItem>
+                        <MenuItem value="She/her/hers">She/her/hers</MenuItem>
+                        <MenuItem value="He/Him/his">He/Him/his</MenuItem>
+                        <MenuItem value="They/them/theirs">They/them/theirs</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
+                    </Select>
+                </div>
+                <br />
                 <Button variant='contained' onClick={createNewClient}>Continue</Button>
             </form>
         </Box>

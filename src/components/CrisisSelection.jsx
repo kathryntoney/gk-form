@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
@@ -40,6 +40,7 @@ export default function CrisisSelection() {
         <>
             <Box>
                 <form>
+                    <Typography variant='h2'>Ask for Help - Description of Crisis</Typography>
                     <InputLabel id="preferred-language">Which of the following categories best describes the crisis you (or the person you are referring) are experiencing?</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -90,6 +91,7 @@ export default function CrisisSelection() {
                     )} */}
                 </form>
             </Box>
+            <br />
         </>
     )
 }

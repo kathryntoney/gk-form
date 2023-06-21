@@ -7,7 +7,7 @@ import NewClient from './NewClient';
 import DisplayClients from './DisplayClients';
 
 export default function Intro() {
-    const [selectedEmploymentStatus, setSelectedEmploymentStatus] = useState('')
+    const [selectedEmploymentStatus, setSelectedEmploymentStatus] = useState('Yes')
     const [timeLimit, setTimeLimit] = useState('')
 
     const handleEmploymentStatusChange = (e) => {
@@ -21,8 +21,8 @@ export default function Intro() {
     return (
         <Box sx={{
             display: 'flex',
-            justifyContent: 'center',
             flexDirection: 'column',
+            justifyContent: 'center',
             alignItems: 'center',
             m: 3
         }}>
