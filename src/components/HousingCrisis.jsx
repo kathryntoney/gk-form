@@ -8,13 +8,17 @@ import { db } from '../firebase'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import Button from '@mui/material/Button';
+import Button from '@mui/material/Button'
+import axios from 'axios'
+import xmlbuilder2 from 'xmlbuilder2'
 
 export default function HousingCrisis() {
     const colRef = collection(db, 'clients')
     const location = useLocation()
     const clientID = location.state?.clientID
     const dispatch = useDispatch()
+    const [addressValidation, setAddressValidation] = useState(null)
+    const [showPopup, setShowPopup] = useState(false)
     const [updateClient, setUpdateClient] = useState({
         statement: '',
         timeframe: '',
@@ -43,7 +47,13 @@ export default function HousingCrisis() {
                 updateClient.timeframe,
                 updateClient.crisisDate,
                 updateClient.cause,
-                updateClient.currentHousing
+                updateClient.currentHousing,
+                updateClient.street1,
+                updateClient.street2,
+                updateClient.city,
+                updateClient.state,
+                updateClient.zip5,
+                updateClient.zip4
             ))
         }
         catch {
@@ -51,6 +61,32 @@ export default function HousingCrisis() {
         }
     }
 
+    let root = xmlbuilder2.create({ version: '1.0' })
+        .ele('AddressValidateRequest', { USERID: '47E2NAWEB2669' })
+        .ele('Address')
+        .ele('Address1').txt(street1).up()
+        .ele('Address2').txt(street2).up()
+        .ele('City').txt(city).up()
+        .ele('State').txt(state).up()
+        .ele('Zip5').txt(zip).up()
+        .ele('Zip4').txt('').up()
+        .up()
+        .up()
+
+    let xml = root.end({ prettyPrint: true })
+    console.log(xml)
+    let url = 'https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&xml=' + encodeURIComponent(xml)
+
+    axios.get(url)
+        .then(function (response) {
+            const obj = xmlbuilder2.convert(response.data, { format: "object" })
+            console.log(obj)
+            setAddressValidation(obj.AddressValidateResponse.Address || null)
+            setShowPopup(true)
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
 
     return (
         <>
@@ -121,6 +157,61 @@ export default function HousingCrisis() {
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                 </Select>
+                <h3>Enter your mailing address:</h3>
+                <TextField
+                    id="outlined-basic"
+                    label="Street 1"
+                    variant="outlined"
+                    onChange={handleChange}
+                    value={updateClient.street1}
+                    name="street1"
+                />
+                <TextField
+                    id="outlined-basic"
+                    label="Street 2"
+                    variant="outlined"
+                    onChange={handleChange}
+                    value={updateClient.street2}
+                    name="street2"
+                />
+                <TextField
+                    id="outlined-basic"
+                    label="City"
+                    variant="outlined"
+                    onChange={handleChange}
+                    value={updateClient.city}
+                    name="city"
+                />
+                <TextField
+                    id="outlined-basic"
+                    label="State"
+                    variant="outlined"
+                    onChange={handleChange}
+                    value={updateClient.state}
+                    name="state"
+                />
+                <TextField
+                    id="outlined-basic"
+                    label="Zipcode"
+                    variant="outlined"
+                    onChange={handleChange}
+                    value={updateClient.zip5}
+                    name="zip"
+                />
+                <Button onClick={
+                    showPopup && addressValidation && (
+                        <div>
+                            <h4>Address Validation</h4>
+                            <p>Please review the validated address:</p>
+                            <p>{addressValidation.Address1}</p>
+                            <p>{addressValidation.Address2}</p>
+                            <p>{addressValidation.City}</p>
+                            <p>{addressValidation.State}</p>
+                            <p>{addressValidation.Zip5}</p>
+                            <button onClick={() => setShowPopup(false)}>Close</button>
+                        </div>
+                    )
+                }>Validate Address</Button>
                 {updateClient.currentHousing === 'Yes' && (
                     <p>Redirect to Financial Award Process / Disaster Application</p>
                 )}

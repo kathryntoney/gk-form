@@ -1,17 +1,22 @@
-
+import axios from 'axios'
+import xmlbuilder2 from 'xmlbuilder2'
+import { Box } from '@mui/material'
+import TextField from '@mui/material/TextField'
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 export default function AddressValidation() {
-    const axios = require('axios').default
-    const xmlbuilder2 = require('xmlbuilder2')
 
-    let root = xmlbuilder2.create({ version '1.0'})
+    let root = xmlbuilder2.create({ version: '1.0' })
         .ele('AddressValidateRequest', { USERID: '47E2NAWEB2669' })
         .ele('Address')
-        .ele('Address1').txt(street1.value).up()
-        .ele('Address2').txt(street2.value).up()
-        .ele('City').txt(city.value).up()
-        .ele('State').txt(state.value).up()
-        .ele('Zip5').txt(zip.value).up()
+        .ele('Address1').txt(street1).up()
+        .ele('Address2').txt(street2).up()
+        .ele('City').txt(city).up()
+        .ele('State').txt(state).up()
+        .ele('Zip5').txt(zip).up()
+        .ele('Zip4').txt('').up()
         .up()
         .up()
 
@@ -28,9 +33,19 @@ export default function AddressValidation() {
             console.log(error)
         })
 
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setUpdateClient((prevState) => ({
+            ...prevState,
+            [name]: value
+        }))
+    }
+
+
     return (
         <>
             <Box>
+                <h3>Enter your mailing address:</h3>
                 <TextField
                     id="outlined-basic"
                     label="Street 1"
