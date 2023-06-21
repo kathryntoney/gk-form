@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import HousingCrisis from './HousingCrisis'
 import { useLocation } from 'react-router-dom'
-import { collection } from 'firebase/firestore'
+import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useDispatch } from 'react-redux'
 
@@ -18,21 +18,18 @@ export default function CrisisSelection() {
     const colRef = collection(db, 'clients')
     const clientID = location.state?.clientID
 
-    const handleSetCrisisType = async (e) => {
+    const handleSetCrisisType = (e) => {
         e.preventDefault()
-        const { value } = e.target;
-        dispatch(setCrisisType(colRef.clientID, value))
-        // try {
-        //     const docRef = await updateDoc(colRef, {
-        //         id: clientID
-        //     })
-        //     console.log('updated crisis type ', clientID)
-        //     dispatch(setCrisisType(docRef, value))
-        //     console.log('inside set crisis type ', clientID)
-        // }
-        // catch (error) {
-        //     console.log('error updating crisis type: ', error)
-        // }
+        const selectedCrisisType = e.target.value;
+        setCrisisType(selectedCrisisType)
+        const docRef = doc(colRef, clientID)
+        updateDoc(docRef, { crisisType })
+            .then(docRef => {
+                console.log(`crisis type added to `, clientID)
+            })
+            .catch(error => {
+                console.log(`couldn't add crisis type `, error)
+            })
     }
 
     const handleSetStatement = (e) => {

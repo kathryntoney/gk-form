@@ -3,11 +3,18 @@ import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { doc, updateDoc } from 'firebase/firestore'
+import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+import Button from '@mui/material/Button';
 
 export default function HousingCrisis() {
+    const colRef = collection(db, 'clients')
+    const location = useLocation()
+    const clientID = location.state?.clientID
+    const dispatch = useDispatch()
     const [updateClient, setUpdateClient] = useState({
         statement: '',
         timeframe: '',
@@ -17,11 +24,31 @@ export default function HousingCrisis() {
     })
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUpdateClient((client) => ({
-            ...client,
+        const { name, value } = e.target
+        setUpdateClient((prevState) => ({
+            ...prevState,
             [name]: value
         }))
+    }
+
+    const handleUpdateClientDoc = async (e) => {
+        e.preventDefault()
+        try {
+            const docRef = doc(colRef, clientID)
+            await updateDoc(docRef, { ...updateClient })
+            console.log(docRef.id, ` updated`)
+            dispatch(setCrisisDetails(
+                clientID,
+                updateClient.statement,
+                updateClient.timeframe,
+                updateClient.crisisDate,
+                updateClient.cause,
+                updateClient.currentHousing
+            ))
+        }
+        catch {
+            console.log(`error updating`)
+        }
     }
 
 
@@ -34,14 +61,14 @@ export default function HousingCrisis() {
                     label="Statement of Need"
                     variant="outlined"
                     onChange={handleChange}
-                    value={client.statement}
-                    name="referName"
+                    value={updateClient.statement}
+                    name="statement"
                 />
                 <InputLabel id="applicant-type-label">Did this disaster occur within the last six months?</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="applicant-type-select"
-                    value={client.timeframe}
+                    value={updateClient.timeframe}
                     name="timeframe"
                     label="Timeframe"
                     onChange={handleChange}
@@ -49,7 +76,7 @@ export default function HousingCrisis() {
                     <MenuItem value="yes">Yes, within the last six months</MenuItem>
                     <MenuItem value="no">No, it occurred more than six months ago</MenuItem>
                 </Select>
-                {timeframe === 'no' && (
+                {updateClient.timeframe === 'no' && (
                     <p>Unfortunately, you are not eligible for financial assistance from Giving Kitchen at this time. But this doesn't mean you can't still get help - please refer to our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> page to find more resources. </p>
                 )}
                 <TextField
@@ -57,14 +84,14 @@ export default function HousingCrisis() {
                     label="Enter the approximate date that your crisis occurred"
                     variant="outlined"
                     onChange={handleChange}
-                    value={client.crisisDate}
+                    value={updateClient.crisisDate}
                     name="crisisDate"
                 />
                 <InputLabel id="applicant-type-label">Which of the following best describes what happened to your housing?</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="applicant-type-select"
-                    value={client.cause}
+                    value={updateClient.cause}
                     name="cause"
                     label="Cause of Disaster"
                     onChange={handleChange}
@@ -76,17 +103,17 @@ export default function HousingCrisis() {
                     <MenuItem value="Other">Other</MenuItem>
                     <MenuItem value="None, not experiencing a housing crisis">None, not experiencing a housing crisis</MenuItem>
                 </Select>
-                {cause === 'None, not experiencing a housing crisis' && (
+                {updateClient.cause === 'None, not experiencing a housing crisis' && (
                     <p>Unfortunately, you are not eligible for financial assistance from Giving Kitchen at this time. But this doesn't mean you can't still get help - please refer to our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> page to find more resources. </p>
                 )}
-                {cause === 'Other' && (
+                {updateClient.cause === 'Other' && (
                     <p>Redirect to Financial Award Process / Injury/Illness Application</p>
                 )}
                 <InputLabel id="applicant-type-label">Have you found a new place to live?</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="applicant-type-select"
-                    value={client.currentHousing}
+                    value={updateClient.currentHousing}
                     name="currentHousing"
                     label="Current Housing"
                     onChange={handleChange}
@@ -94,12 +121,13 @@ export default function HousingCrisis() {
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                 </Select>
-                {currentHousing === 'Yes' && (
+                {updateClient.currentHousing === 'Yes' && (
                     <p>Redirect to Financial Award Process / Disaster Application</p>
                 )}
-                {currentHousing === 'No' && (
+                {updateClient.currentHousing === 'No' && (
                     <p>Redirect to Stability Network Process and Crisis Financial Aid Application</p>
                 )}
+                <Button variant='contained' onClick={handleUpdateClientDoc}>Exit</Button>
             </Box>
         </>
     )

@@ -16,6 +16,12 @@ const crisisReducer = (state, action) => {
                 clientID: action.data.clientID,
                 crisis: action.data.crisis
             }
+        case "SET_CRISIS_DETAILS":
+            console.log('inside update crisis details', action)
+            return {
+                ...state,
+                clientID: action.data.clientID
+            }
         default:
             return state;
     }
