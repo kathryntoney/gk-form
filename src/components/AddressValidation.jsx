@@ -1,92 +1,68 @@
-import axios from 'axios'
-import xmlbuilder2 from 'xmlbuilder2'
-import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+} from "use-places-autocomplete";
+import useOnclickOutside from "react-cool-onclickoutside";
 
 export default function AddressValidation() {
+    const {
+        ready,
+        value,
+        suggestions: { status, data },
+        setValue,
+        clearSuggestions,
+    } = usePlacesAutocomplete({
+        requestOptions: {
+        },
+        debounce: 300,
+    });
+    const ref = useOnclickOutside(() => {
+        clearSuggestions();
+    });
 
-    let root = xmlbuilder2.create({ version: '1.0' })
-        .ele('AddressValidateRequest', { USERID: '47E2NAWEB2669' })
-        .ele('Address')
-        .ele('Address1').txt(street1).up()
-        .ele('Address2').txt(street2).up()
-        .ele('City').txt(city).up()
-        .ele('State').txt(state).up()
-        .ele('Zip5').txt(zip).up()
-        .ele('Zip4').txt('').up()
-        .up()
-        .up()
+    const handleInput = (e) => {
+        setValue(e.target.value);
+    };
 
-    let xml = root.end({ prettyPrint: true })
-    console.log(xml)
-    let url = 'https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&xml=' + encodeURIComponent(xml)
+    const handleSelect =
+        ({ description }) =>
+            () => {
+                setValue(description, false);
+                clearSuggestions();
+                getGeocode({ address: description }).then((results) => {
+                    const { lat, lng } = getLatLng(results[0]);
+                    console.log("📍 Coordinates: ", { lat, lng });
+                    setAddress(description)
+                });
+            };
 
-    axios.get(url)
-        .then(function (response) {
-            const obj = xmlbuilder2.convert(response.data, { format: "object" })
-            console.log(obj)
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
+    const renderSuggestions = () =>
+        data.map((suggestion) => {
+            const {
+                place_id,
+                structured_formatting: { main_text, secondary_text },
+            } = suggestion;
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setUpdateClient((prevState) => ({
-            ...prevState,
-            [name]: value
-        }))
-    }
-
+            return (
+                <li key={place_id} onClick={handleSelect(suggestion)}>
+                    <strong>{main_text}</strong> <small>{secondary_text}</small>
+                </li>
+            );
+        });
 
     return (
         <>
-            <Box>
-                <h3>Enter your mailing address:</h3>
-                <TextField
-                    id="outlined-basic"
-                    label="Street 1"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={street1}
-                    name="street1"
-                />
-                <TextField
-                    id="outlined-basic"
-                    label="Street 2"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={street2}
-                    name="street2"
-                />
-                <TextField
-                    id="outlined-basic"
-                    label="City"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={city}
-                    name="city"
-                />
-                <TextField
-                    id="outlined-basic"
-                    label="State"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={state}
-                    name="state"
-                />
-                <TextField
-                    id="outlined-basic"
-                    label="Zipcode"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={zip}
-                    name="zip"
-                />
-            </Box>
+            <TextField
+                id="outlined-basic"
+                label="Address"
+                variant="outlined"
+                onChange={handleInput}
+                value={value}
+                name="address"
+            />
+            {status === "OK" && <ul>{renderSuggestions()}</ul>}
         </>
-    )
-}
+    );
+};
