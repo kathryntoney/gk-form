@@ -10,7 +10,64 @@ import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import axios from 'axios'
-import xmlbuilder2 from 'xmlbuilder2'
+import xmlbuilder from 'xmlbuilder2';
+// import { parseStringPromise } from 'xml2js'
+import { parseString } from 'xml-js'
+
+function validateAddress(updateClient, setAddressValidation, setShowPopup) {
+    const root = xmlbuilder.create({ version: '1.0' })
+        .ele('AddressValidateRequest', { USERID: '47E2NAWEB2669' })
+        .ele('Address')
+        .ele('Address1').txt(updateClient.street1).up();
+    if (updateClient.street2) {
+        root.ele('Address2').txt(updateClient.street2).up()
+    };
+    root.ele('City').txt(updateClient.city).up()
+    root.ele('State').txt(updateClient.state).up()
+    root.ele('Zip5').txt(updateClient.zip).up()
+    root.ele('Zip4').txt('').up()
+    root.up()
+    root.up()
+
+    const xml = root.end({ pretty: true })
+    console.log(xml)
+    const encodedXml = encodeURIComponent(xml)
+    let url = `https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&xml=${encodedXml}`
+
+    axios.get(url)
+        .then(function (response) {
+            const xmlData = response.data;
+            parseString(xmlData, { explicitArray: false }, function (err, result) {
+                if (err) {
+                    console.log(err)
+                }
+                else {
+                    const obj = result.AddressValidateResponse.Address || null;
+                    console.log(obj)
+                    setAddressValidation(obj)
+                    setShowPopup(true)
+                }
+            })
+                .catch(function (error) {
+                    console.log('error in addy validation ', error)
+                })
+        })
+
+    // axios.get(url)
+    //     .then(function (response) {
+    //         const xmlData = response.data
+    //         console.log(xmlData)
+    //         parseStringPromise(xmlData, { explicitArray: false }).then(function (result) {
+    //             const obj = result.AddressValidateResponse.Address || null;
+    //             console.log(obj)
+    //             setAddressValidation(obj)
+    //             setShowPopup(true)
+    //         })
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error)
+    //     })
+}
 
 export default function HousingCrisis() {
     const colRef = collection(db, 'clients')
@@ -61,32 +118,29 @@ export default function HousingCrisis() {
         }
     }
 
-    let root = xmlbuilder2.create({ version: '1.0' })
-        .ele('AddressValidateRequest', { USERID: '47E2NAWEB2669' })
-        .ele('Address')
-        .ele('Address1').txt(street1).up()
-        .ele('Address2').txt(street2).up()
-        .ele('City').txt(city).up()
-        .ele('State').txt(state).up()
-        .ele('Zip5').txt(zip).up()
-        .ele('Zip4').txt('').up()
-        .up()
-        .up()
+    const handleValidateAddress = () => {
+        validateAddress(
+            updateClient,
+            setAddressValidation,
+            setShowPopup
+        )
+    }
 
-    let xml = root.end({ prettyPrint: true })
-    console.log(xml)
-    let url = 'https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&xml=' + encodeURIComponent(xml)
 
-    axios.get(url)
-        .then(function (response) {
-            const obj = xmlbuilder2.convert(response.data, { format: "object" })
-            console.log(obj)
-            setAddressValidation(obj.AddressValidateResponse.Address || null)
-            setShowPopup(true)
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
+    // showPopup && addressValidation && (
+    //     <div>
+    //         <h4>Address Validation</h4>
+    //         <p>Please review the validated address:</p>
+    //         <p>{addressValidation.Address1}</p>
+    //         <p>{addressValidation.Address2}</p>
+    //         <p>{addressValidation.City}</p>
+    //         <p>{addressValidation.State}</p>
+    //         <p>{addressValidation.Zip5}</p>
+    //         <button onClick={() => setShowPopup(false)}>Close</button>
+    //     </div>
+    // )
+
+
 
     return (
         <>
@@ -198,20 +252,7 @@ export default function HousingCrisis() {
                     value={updateClient.zip5}
                     name="zip"
                 />
-                <Button onClick={
-                    showPopup && addressValidation && (
-                        <div>
-                            <h4>Address Validation</h4>
-                            <p>Please review the validated address:</p>
-                            <p>{addressValidation.Address1}</p>
-                            <p>{addressValidation.Address2}</p>
-                            <p>{addressValidation.City}</p>
-                            <p>{addressValidation.State}</p>
-                            <p>{addressValidation.Zip5}</p>
-                            <button onClick={() => setShowPopup(false)}>Close</button>
-                        </div>
-                    )
-                }>Validate Address</Button>
+                <Button onClick={handleValidateAddress}>Validate Address</Button>
                 {updateClient.currentHousing === 'Yes' && (
                     <p>Redirect to Financial Award Process / Disaster Application</p>
                 )}
