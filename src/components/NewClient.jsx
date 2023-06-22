@@ -110,7 +110,7 @@ export default function NewClient({ clientID }) {
                             }}>
                                 <TextField
                                     id="outlined-basic"
-                                    label="Referrer Email"
+                                    // label="Referrer Email"
                                     type="email"
                                     variant="outlined"
                                     onChange={handleChange}
@@ -127,7 +127,7 @@ export default function NewClient({ clientID }) {
                             }}>
                                 <TextField
                                     id="outlined-basic"
-                                    label="Referrer Phone"
+                                    // label="Referrer Phone"
                                     variant="outlined"
                                     onChange={handleChange}
                                     value={client.referPhone}
@@ -243,8 +243,8 @@ export default function NewClient({ clientID }) {
                     }}>
                         <TextField
                             id="outlined-basic"
-                            label="Phone Number"
-                            type="number"
+                            // label="Phone Number"
+                            // type="number"
                             variant="outlined"
                             required
                             onChange={handleChange}

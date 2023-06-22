@@ -6,6 +6,8 @@ import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl';
 import HousingCrisis from './HousingCrisis'
 import IllnessCrisis from './IllnessCrisis'
+import FuneralCrisis from './FuneralCrisis'
+import SubstanceCrisis from './SubstanceCrisis'
 import { useLocation } from 'react-router-dom'
 import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -42,7 +44,13 @@ export default function CrisisSelection() {
         <>
             <Box>
                 <form>
-                    <Typography variant='h2'>Ask for Help - Description of Crisis</Typography>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        m: 3
+                    }}>
+                        <Typography variant='h2'>Ask for Help Form</Typography>
+                    </Box>
                     <InputLabel id="preferred-language">Which of the following categories best describes the crisis you (or the person you are referring) are experiencing?</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
@@ -57,8 +65,8 @@ export default function CrisisSelection() {
                         >
                             <MenuItem value="Housing disaster">Housing disaster</MenuItem>
                             <MenuItem value="Illness/injury (physical or mental)">Illness/injury (physical or mental)</MenuItem>
-                            {/* <MenuItem value="Illness (substance)">Illness (substance)</MenuItem>
-                        <MenuItem value="Funeral">Funeral</MenuItem> */}
+                            <MenuItem value="Illness (substance)">Illness (substance)</MenuItem>
+                            <MenuItem value="Funeral">Funeral</MenuItem>
                             <MenuItem value="Other">Other</MenuItem>
                         </Select>
                     </FormControl>
@@ -90,7 +98,7 @@ export default function CrisisSelection() {
                             <IllnessCrisis clientID={clientID} />
                         </>
                     )}
-                    {/* {crisisType === 'Illness (substance)' && (
+                    {crisisType === 'Illness (substance)' && (
                         <>
                             <SubstanceCrisis />
                         </>
@@ -99,7 +107,7 @@ export default function CrisisSelection() {
                         <>
                             <FuneralCrisis />
                         </>
-                    )} */}
+                    )}
                 </form>
             </Box>
             <br />

@@ -12,7 +12,7 @@ import { db } from '../firebase'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { setCrisisDetails } from '../actions/crisisActions';
+import { setHousingCrisisDetails } from '../actions/crisisActions';
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
@@ -104,7 +104,7 @@ export default function HousingCrisis() {
             await updateDoc(docRef, { ...updateClient })
             console.log(updateClient, 'line 44')
             console.log(docRef.id, ` updated line 45`)
-            dispatch(setCrisisDetails(
+            dispatch(setHousingCrisisDetails(
                 clientID,
                 updateClient.statement,
                 updateClient.timeframe,

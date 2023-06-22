@@ -19,7 +19,7 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
-export default function IllnessCrisis() {
+export default function SubstanceCrisis() {
     const colRef = collection(db, 'clients')
     const location = useLocation()
     const clientID = location.state?.clientID
@@ -27,7 +27,7 @@ export default function IllnessCrisis() {
     const [address, setAddress] = useState('')
     const [updateClient, setUpdateClient] = useState({
         statement: '',
-        diagnosis: '',
+        treatment: '',
         crisisDate: '',
         address: ''
     })
@@ -102,10 +102,10 @@ export default function IllnessCrisis() {
             await updateDoc(docRef, { ...updateClient })
             console.log(updateClient, 'line 44')
             console.log(docRef.id, ` updated line 45`)
-            dispatch(setIllnessCrisisDetails(
+            dispatch(setFuneralCrisisDetails(
                 clientID,
                 updateClient.statement,
-                updateClient.diagnosis,
+                updateClient.treatment,
                 updateClient.crisisDate,
                 address
             ))
@@ -119,7 +119,7 @@ export default function IllnessCrisis() {
         <>
             <Box>
                 <div>
-                    <InputLabel id="applicant-type-label">Please describe your injury / illness crisis in detail using the field below:</InputLabel>
+                    <InputLabel id="applicant-type-label">Please provide as many details as you are able about the substance issues you are facing:</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -132,30 +132,32 @@ export default function IllnessCrisis() {
                             name="statement"
                         />
                     </FormControl>
-                    <InputLabel id="applicant-type-label">Did you receive a medical diagnosis for this injury or condition?</InputLabel>
+                    <InputLabel id="applicant-type-label">Did the applicant enter or complete a treatment program within the last six months?</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
                         <Select
                             labelId="demo-simple-select-label"
                             id="applicant-type-select"
-                            value={updateClient.diagnosis}
-                            name="diagnosis"
-                            label="Diagnosis"
+                            value={updateClient.treatment}
+                            name="treatment"
+                            label="Treatment"
                             onChange={handleChange}
                         >
-                            <MenuItem value="Yes">Yes, within the last six months</MenuItem>
-                            <MenuItem value="No">No, it occurred more than six months ago</MenuItem>
+                            <MenuItem value="Yes">Yes</MenuItem>
+                            <MenuItem value="No">No</MenuItem>
                         </Select>
                     </FormControl>
-                    {updateClient.diagnosis === 'No' && (
-                        <Typography variant='h5'>
-                            Unfortunately, you are not eligible for financial assistance from Giving Kitchen at this time. But this doesn't mean you can't still get help - please refer to our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> page to find more resources.
-                        </Typography>
-                    )}
-                    {updateClient.diagnosis === "Yes" && (
+                    {updateClient.treatment === 'No' && (
                         <>
-                            <InputLabel id="applicant-type-label">Enter the approximate date that your crisis occurred:</InputLabel>
+                            <Typography variant='h5'>
+                                Unfortunately, you are not eligible for financial assistance from Giving Kitchen at this time. But this doesn't mean you can't still get help - please refer to our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> page to find more resources.
+                            </Typography>
+                        </>
+                    )}
+                    {updateClient.treatment === "Yes" && (
+                        <>
+                            <InputLabel id="applicant-type-label">Enter the date that the applicant entered or completed a treatment program:</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>

@@ -16,7 +16,21 @@ const crisisReducer = (state, action) => {
                 clientID: action.data.clientID,
                 crisis: action.data.crisis
             }
-        case "SET_CRISIS_DETAILS":
+        case "SET_HOUSING_CRISIS_DETAILS":
+            console.log('inside update crisis details', action)
+            return {
+                ...state,
+                clientID: action.data.clientID,
+                address: action.data.address
+            }
+        case "SET_ILLNESS_CRISIS_DETAILS":
+            console.log('inside update crisis details', action)
+            return {
+                ...state,
+                clientID: action.data.clientID,
+                address: action.data.address
+            }
+        case "SET_FUNERAL_CRISIS_DETAILS":
             console.log('inside update crisis details', action)
             return {
                 ...state,
