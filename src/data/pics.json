@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "img": "https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1657639494210-YNR8RNQGM3X7EKGA5SQZ/bitter+south+carousel+1.png?format=2500w",
+        "link": "https://bittersoutherner.com/feature/2022/the-giving-kitchen-john-kessler",
+        "title": "Bitter Southerner Article"
+    },
+    {
+        "id": 2,
+        "img": "https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1687279934836-5Y65EHRZCPFPD9Z7ORFT/Your%2Bdonation%2Bmakes%2Ban%2Bimpact.%2B%25281%2529.jpg?format=1500w",
+        "link": "https://thegivingkitchen.org/give",
+        "title": "Donation Impact"
+    },
+    {
+        "id": 3,
+        "img": "https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1676670663313-3DQ18698XV7F01C34V5W/8%2C000%2C000+%282400+%C3%97+1200+px%29.png?format=2500w",
+        "link": "https://thegivingkitchen.org/give",
+        "title": "Gr8ful"
+    }
+]

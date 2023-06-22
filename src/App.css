@@ -25,9 +25,42 @@ align-items: start;
 
 .nav-link {
   color:#2a4988;
+  font-weight: bold;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color:#2a4988;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .title {
   color: #2a4988;
+  font-weight: bold;
   font-family: 'Roboto Mono', monospace;
+}
+
+.carousel-img {
+  height: 80vh;
+}
+
+.carousel {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: #2a4988
 }
