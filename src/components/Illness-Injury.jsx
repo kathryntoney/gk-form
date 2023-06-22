@@ -117,7 +117,7 @@ export default function HousingCrisis() {
     return (
         <>
             <Box>
-                <h3>In the field below, please describe your crisis in detail.</h3>
+            <InputLabel id="applicant-type-label">Please describe your injury / illness crisis in detail using the field below:</InputLabel>
                 <TextField
                     id="outlined-basic"
                     label="Statement of Need"
@@ -126,7 +126,7 @@ export default function HousingCrisis() {
                     value={updateClient.statement}
                     name="statement"
                 />
-                <InputLabel id="applicant-type-label">Did this disaster occur within the last six months?</InputLabel>
+                <InputLabel id="applicant-type-label">Did you receive a medical diagnosis for this injury or condition?</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="applicant-type-select"
