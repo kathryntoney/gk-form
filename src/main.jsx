@@ -11,6 +11,7 @@ import rootReducer from './reducers/rootReducer'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import CrisisSelection from './components/CrisisSelection'
 import BaseLayout from './layout/BaseLayout'
+import Home from './components/Home'
 
 const persistConfig = {
   key: 'root',
@@ -30,7 +31,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Router>
           <BaseLayout>
             <Routes>
-              <Route path='/' element={<App />} />
+              <Route path='/' element={<Home />} />
+              <Route path='/form' element={<App />} />
               <Route path='/crisis' element={<CrisisSelection />} />
             </Routes>
           </BaseLayout>
