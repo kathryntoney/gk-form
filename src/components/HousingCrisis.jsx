@@ -4,11 +4,14 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl';
+import List from '@mui/joy/List';
+import ListItem from '@mui/joy/ListItem';
 import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { setCrisisDetails } from '../actions/crisisActions';
 import usePlacesAutocomplete, {
     getGeocode,
@@ -77,9 +80,11 @@ export default function HousingCrisis() {
             } = suggestion;
 
             return (
-                <li key={place_id} onClick={handleSelect(suggestion)}>
-                    <strong>{main_text}</strong> <small>{secondary_text}</small>
-                </li>
+                <>
+                    <ListItem key={place_id} onClick={handleSelect(suggestion)}>
+                        <strong>{main_text}</strong> <small>{secondary_text}</small>
+                    </ListItem>
+                </>
             );
         });
     // END ADDRESS VALIDATION
@@ -120,108 +125,139 @@ export default function HousingCrisis() {
                 <br />
                 <div>
                     <InputLabel id="applicant-type-label">Please describe your crisis in detail using the field below:</InputLabel>
-                    <TextField
-                        id="outlined-basic"
-                        label="Statement of Need"
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={updateClient.statement}
-                        name="statement"
-                    />
+                    <FormControl sx={{
+                        minWidth: 300
+                    }}>
+                        <TextField
+                            id="outlined-basic"
+                            label="Statement of Need"
+                            variant="outlined"
+                            multiline
+                            onChange={handleChange}
+                            value={updateClient.statement}
+                            name="statement"
+                        />
+                    </FormControl>
                 </div>
                 <br />
                 <div>
                     <InputLabel id="applicant-type-label">Did this disaster occur within the last six months?</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="applicant-type-select"
-                        value={updateClient.timeframe}
-                        name="timeframe"
-                        label="Timeframe"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="yes">Yes, within the last six months</MenuItem>
-                        <MenuItem value="no">No, it occurred more than six months ago</MenuItem>
-                    </Select>
+                    <FormControl sx={{
+                        minWidth: 300
+                    }}>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="applicant-type-select"
+                            value={updateClient.timeframe}
+                            name="timeframe"
+                            label="Timeframe"
+                            onChange={handleChange}
+                        >
+                            <MenuItem value="yes">Yes, within the last six months</MenuItem>
+                            <MenuItem value="no">No, it occurred more than six months ago</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
                 <br />
                 {updateClient.timeframe === 'no' && (
                     <p>Unfortunately, you are not eligible for financial assistance from Giving Kitchen at this time. But this doesn't mean you can't still get help - please refer to our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> page to find more resources. </p>
                 )}
-                <div>
-                    <InputLabel id="applicant-type-label">Enter the approximate date that your crisis occurred:</InputLabel>
-                    <TextField
-                        id="outlined-basic"
-                        label="Date of Crisis"
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={updateClient.crisisDate}
-                        name="crisisDate"
-                    />
-                </div>
-                <br />
-                <div>
-                    <InputLabel id="applicant-type-label">Which of the following best describes what happened to your housing?</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="applicant-type-select"
-                        value={updateClient.cause}
-                        name="cause"
-                        label="Cause of Disaster"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="Fire">Fire</MenuItem>
-                        <MenuItem value="Flood">Flood</MenuItem>
-                        <MenuItem value="Mold">Mold</MenuItem>
-                        <MenuItem value="Tornado">Tornado</MenuItem>
-                        <MenuItem value="Other">Other</MenuItem>
-                        <MenuItem value="None, not experiencing a housing crisis">None, not experiencing a housing crisis</MenuItem>
-                    </Select>
-                </div>
-                <br />
+                {updateClient.timeframe === 'yes' && (
+                    <>
+                        <div>
+                            <InputLabel id="applicant-type-label">Enter the approximate date that your crisis occurred:</InputLabel>
+                            <FormControl sx={{
+                                minWidth: 300
+                            }}>
+                                <TextField
+                                    id="outlined-basic"
+                                    // label="Date of Crisis"
+                                    variant="outlined"
+                                    type="date"
+                                    onChange={handleChange}
+                                    value={updateClient.crisisDate}
+                                    name="crisisDate"
+                                />
+                            </FormControl>
+                        </div>
+                        <br />
+                        <div>
+                            <InputLabel id="applicant-type-label">Which of the following best describes what happened to your housing?</InputLabel>
+                            <FormControl sx={{
+                                minWidth: 300
+                            }}>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="applicant-type-select"
+                                    value={updateClient.cause}
+                                    name="cause"
+                                    label="Cause of Disaster"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value="Fire">Fire</MenuItem>
+                                    <MenuItem value="Flood">Flood</MenuItem>
+                                    <MenuItem value="Mold">Mold</MenuItem>
+                                    <MenuItem value="Tornado">Tornado</MenuItem>
+                                    <MenuItem value="Other">Other</MenuItem>
+                                    <MenuItem value="None, not experiencing a housing crisis">None, not experiencing a housing crisis</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </div>
+                        <br />
+                    </>
+                )}
+                {(updateClient.cause === 'Fire' || updateClient.cause === 'Flood' || updateClient.cause === 'Mold' || updateClient.cause === 'Tornado') && (
+                    <>
+                        <div>
+                            <InputLabel id="applicant-type-label">Have you found a new place to live?</InputLabel>
+                            <FormControl sx={{
+                                minWidth: 300
+                            }}>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="applicant-type-select"
+                                    value={updateClient.currentHousing}
+                                    name="currentHousing"
+                                    label="Current Housing"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value="Yes">Yes</MenuItem>
+                                    <MenuItem value="No">No</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </div>
+                        <br />
+                        <div>
+                            <InputLabel id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
+                            <FormControl sx={{
+                                minWidth: 300
+                            }}>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Address"
+                                    variant="outlined"
+                                    onChange={handleInput}
+                                    value={value}
+                                    name="address"
+                                />
+                            </FormControl>
+                        </div>
+                        <br />
+                        {status === "OK" && <List>{renderSuggestions()}</List>}
+                    </>
+                )}
                 {updateClient.cause === 'None, not experiencing a housing crisis' && (
                     <p>Unfortunately, you are not eligible for financial assistance from Giving Kitchen at this time. But this doesn't mean you can't still get help - please refer to our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> page to find more resources. </p>
                 )}
                 {updateClient.cause === 'Other' && (
                     <p>Redirect to Financial Award Process / Injury/Illness Application</p>
                 )}
-                <div>
-                    <InputLabel id="applicant-type-label">Have you found a new place to live?</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="applicant-type-select"
-                        value={updateClient.currentHousing}
-                        name="currentHousing"
-                        label="Current Housing"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="Yes">Yes</MenuItem>
-                        <MenuItem value="No">No</MenuItem>
-                    </Select>
-                </div>
-                <br />
-                <div>
-                    <InputLabel id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
-                    <TextField
-                        id="outlined-basic"
-                        label="Address"
-                        variant="outlined"
-                        onChange={handleInput}
-                        value={value}
-                        name="address"
-                    />
-                </div>
-                <br />
-                {status === "OK" && <ul>{renderSuggestions()}</ul>}
+
+
+
+
                 <Button variant='contained' onClick={handleUpdateClientDoc}>Exit</Button>
-                <>
-                    {updateClient.address === 'Yes' && (
-                        <p>Redirect to Financial Award Process / Disaster Application</p>
-                    )}
-                    {updateClient.address === 'No' && (
-                        <p>Redirect to Stability Network Process and Crisis Financial Aid Application</p>
-                    )}
-                </>
+
             </Box>
         </>
     )

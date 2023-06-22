@@ -11,6 +11,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import rootReducer from './reducers/rootReducer'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import CrisisSelection from './components/CrisisSelection'
+import BaseLayout from './layout/BaseLayout'
 
 const persistConfig = {
   key: 'root',
@@ -28,10 +29,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <Router>
-          <Routes>
-            <Route path='/' element={<App />} />
-            <Route path='/crisis' element={<CrisisSelection />} />
-          </Routes>
+          <BaseLayout>
+            <Routes>
+              <Route path='/' element={<App />} />
+              <Route path='/crisis' element={<CrisisSelection />} />
+            </Routes>
+          </BaseLayout>
         </Router>
       </PersistGate>
     </Provider>

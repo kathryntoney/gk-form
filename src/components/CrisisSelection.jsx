@@ -3,7 +3,9 @@ import { Box, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl';
 import HousingCrisis from './HousingCrisis'
+import IllnessCrisis from './IllnessCrisis'
 import { useLocation } from 'react-router-dom'
 import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -42,31 +44,40 @@ export default function CrisisSelection() {
                 <form>
                     <Typography variant='h2'>Ask for Help - Description of Crisis</Typography>
                     <InputLabel id="preferred-language">Which of the following categories best describes the crisis you (or the person you are referring) are experiencing?</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={crisisType}
-                        name="crisisType"
-                        label="Crisis Type"
-                        onChange={handleSetCrisisType}
-                    >
-                        <MenuItem value="Housing disaster">Housing disaster</MenuItem>
-                        {/* <MenuItem value="Illness/injury (physical or mental)">Illness/injury (physical or mental)</MenuItem>
-                        <MenuItem value="Illness (substance)">Illness (substance)</MenuItem>
+                    <FormControl sx={{
+                        minWidth: 300
+                    }}>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={crisisType}
+                            name="crisisType"
+                            label="Crisis Type"
+                            onChange={handleSetCrisisType}
+                        >
+                            <MenuItem value="Housing disaster">Housing disaster</MenuItem>
+                            <MenuItem value="Illness/injury (physical or mental)">Illness/injury (physical or mental)</MenuItem>
+                            {/* <MenuItem value="Illness (substance)">Illness (substance)</MenuItem>
                         <MenuItem value="Funeral">Funeral</MenuItem> */}
-                        <MenuItem value="Other">Other</MenuItem>
-                    </Select>
+                            <MenuItem value="Other">Other</MenuItem>
+                        </Select>
+                    </FormControl>
                     {crisisType === 'Other' && (
                         <>
                             <p>Based on your responses so far, we are unable to make a clear determination on your eligibility for assistance. Please use the field below to fill out a Statement of Need. You should allow 5-7 business days for a response. In the meantime, please check out our <a href='https://thegivingkitchen.org/stability-network'>Stability Network</a> resources.</p>
-                            <TextField
-                                id="outlined-basic"
-                                label="First Name"
-                                variant="outlined"
-                                onChange={handleSetStatement}
-                                value={statement}
-                                name="firstName"
-                            />
+                            <FormControl sx={{
+                                minWidth: 300
+                            }}>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="First Name"
+                                    variant="outlined"
+                                    multiline
+                                    onChange={handleSetStatement}
+                                    value={statement}
+                                    name="firstName"
+                                />
+                            </FormControl>
                         </>
                     )}
                     {crisisType === 'Housing disaster' && (
@@ -74,12 +85,12 @@ export default function CrisisSelection() {
                             <HousingCrisis clientID={clientID} />
                         </>
                     )}
-                    {/* {crisisType === 'Illness/injury (physical or mental)' && (
+                    {crisisType === 'Illness/injury (physical or mental)' && (
                         <>
-                            <IllnessCrisis />
+                            <IllnessCrisis clientID={clientID} />
                         </>
                     )}
-                    {crisisType === 'Illness (substance)' && (
+                    {/* {crisisType === 'Illness (substance)' && (
                         <>
                             <SubstanceCrisis />
                         </>
