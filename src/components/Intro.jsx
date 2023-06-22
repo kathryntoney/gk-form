@@ -21,12 +21,12 @@ export default function Intro() {
     return (
 
         <>
-            <Box sx={{
+            <Box className='title' sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 m: 3
             }}>
-                <Typography variant='h2'>Ask For Help Form</Typography>
+                <Typography className='title' variant='h2'>Ask For Help Form</Typography>
             </Box>
             <form>
                 <Box className='intro-form' sx={{
