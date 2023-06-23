@@ -11,8 +11,8 @@ import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation } from 'react-router-dom'
-import { setIllnessCrisisDetails } from '../actions/crisisActions';
+import { useLocation, useNavigate } from 'react-router-dom'
+import { setSubstanceCrisisDetails } from '../actions/crisisActions';
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
@@ -22,6 +22,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 export default function SubstanceCrisis() {
     const colRef = collection(db, 'clients')
     const location = useLocation()
+    const navigate = useNavigate()
     const clientID = location.state?.clientID
     const dispatch = useDispatch()
     const [address, setAddress] = useState('')
@@ -102,13 +103,14 @@ export default function SubstanceCrisis() {
             await updateDoc(docRef, { ...updateClient })
             console.log(updateClient, 'line 44')
             console.log(docRef.id, ` updated line 45`)
-            dispatch(setFuneralCrisisDetails(
+            dispatch(setSubstanceCrisisDetails(
                 clientID,
                 updateClient.statement,
                 updateClient.treatment,
                 updateClient.crisisDate,
                 address
             ))
+            navigate('/')
         }
         catch (error) {
             console.log(`error updating`, error)
@@ -186,7 +188,7 @@ export default function SubstanceCrisis() {
                                 />
                             </FormControl>
                             <br />
-                            {status === "OK" && <List>{renderSuggestions()}</List>}
+                            {status === "OK" && <List className='List'>{renderSuggestions()}</List>}
                         </>
                     )}
                 </div>

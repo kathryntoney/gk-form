@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -30,19 +30,46 @@ export default function CrisisSelection() {
     const colRef = collection(db, 'clients')
     const clientID = location.state?.clientID
 
+    useEffect(() => {
+        if (crisisType && clientID) {
+            const docRef = doc(colRef, clientID)
+            updateDoc(docRef, { crisisType })
+                .then(() => {
+                    console.log('crisis type added to: ', clientID)
+                })
+                .catch((error) => {
+                    console.log(`couldn't add crisis type to: `, clientID)
+                })
+        }
+    }, [crisisType, clientID]
+    )
+
     const handleSetCrisisType = (e) => {
         e.preventDefault()
         const selectedCrisisType = e.target.value;
         setCrisisType(selectedCrisisType)
-        const docRef = doc(colRef, clientID)
-        updateDoc(docRef, { crisisType })
-            .then(docRef => {
-                console.log(`crisis type added to `, clientID)
-            })
-            .catch(error => {
-                console.log(`couldn't add crisis type `, error)
-            })
     }
+    //     , () => {
+    //     const docRef = doc(colRef, clientID);
+    //     console.log('selected crisis type: ', selectedCrisisType)
+    //     console.log('clientID: ', clientID)
+    //     updateDoc(docRef, { crisisType: selectedCrisisType })
+    //         .then(() => {
+    //             console.log('crisis type added to: ', clientID)
+    //         })
+    //         .catch((error) => {
+    //             console.log(`couldn't add crisis type to: `, clientID)
+    //         })
+
+    // }
+    // const docRef = doc(colRef, clientID)
+    // updateDoc(docRef, { crisisType })
+    //     .then(docRef => {
+    //         console.log(`crisis type added to `, clientID)
+    //     })
+    //     .catch(error => {
+    //         console.log(`couldn't add crisis type `, error)
+    //     })
 
     const handleSetStatement = (e) => {
         setStatement(e.target.value)

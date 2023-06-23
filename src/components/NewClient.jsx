@@ -163,7 +163,7 @@ export default function NewClient({ clientID }) {
                                         variant="outlined"
                                         onChange={handleChange}
                                         value={client.referPhone}
-                                        type="number"
+                                        // type="number"
                                         name="referPhone"
                                     />
                                 </FormControl>

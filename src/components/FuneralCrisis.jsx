@@ -11,7 +11,7 @@ import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { setIllnessCrisisDetails } from '../actions/crisisActions';
 import usePlacesAutocomplete, {
     getGeocode,
@@ -24,6 +24,7 @@ export default function FuneralCrisis() {
     const location = useLocation()
     const clientID = location.state?.clientID
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [address, setAddress] = useState('')
     const [updateClient, setUpdateClient] = useState({
         statement: '',
@@ -111,6 +112,7 @@ export default function FuneralCrisis() {
                 updateClient.crisisDate,
                 address
             ))
+            navigate('/')
         }
         catch (error) {
             console.log(`error updating`, error)
@@ -217,7 +219,7 @@ export default function FuneralCrisis() {
                                         />
                                     </FormControl>
                                     <br />
-                                    {status === "OK" && <List>{renderSuggestions()}</List>}
+                                    {status === "OK" && <List className='List'>{renderSuggestions()}</List>}
                                 </>
                             )}
                         </>
