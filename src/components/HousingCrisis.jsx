@@ -24,6 +24,7 @@ export default function HousingCrisis() {
     const location = useLocation()
     const clientID = location.state?.clientID
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [address, setAddress] = useState('')
     const [updateClient, setUpdateClient] = useState({
         statement: '',
@@ -113,6 +114,7 @@ export default function HousingCrisis() {
                 updateClient.currentHousing,
                 address
             ))
+            navigate('/')
         }
         catch (error) {
             console.log(`error updating`, error)
@@ -243,7 +245,7 @@ export default function HousingCrisis() {
                             </FormControl>
                         </div>
                         <br />
-                        {status === "OK" && <List>{renderSuggestions()}</List>}
+                        {status === "OK" && <List className='List'>{renderSuggestions()}</List>}
                     </>
                 )}
                 {updateClient.cause === 'None, not experiencing a housing crisis' && (

@@ -56,3 +56,18 @@ export const setFuneralCrisisDetails = (clientID, crisisType, statement, diagnos
         }
     }
 }
+
+export const setSubstanceCrisisDetails = (clientID, crisisType, statement, treatment, crisisDate, address) => {
+    console.log(clientID)
+    return {
+        type: 'SET_SUBSTANCE_CRISIS_DETAILS',
+        data: {
+            clientID,
+            crisisType,
+            statement,
+            treatment,
+            crisisDate,
+            address
+        }
+    }
+}

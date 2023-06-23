@@ -7,7 +7,16 @@ const Footer = () => {
     return (
         <>
             <Box>
+<div>
+    <div>
 
+    </div>
+    <div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
             </Box>
         </>
     )
