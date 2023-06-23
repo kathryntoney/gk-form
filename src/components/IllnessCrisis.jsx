@@ -5,8 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useState } from 'react'
@@ -127,6 +127,7 @@ export default function IllnessCrisis() {
                             id="outlined-basic"
                             label="Statement of Need"
                             variant="outlined"
+                            multiline
                             onChange={handleChange}
                             value={updateClient.statement}
                             name="statement"

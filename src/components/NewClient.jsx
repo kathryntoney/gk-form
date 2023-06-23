@@ -23,6 +23,9 @@ const theme = createTheme({
 
 export default function NewClient({ clientID }) {
     const [selectedApplicantType, setSelectedApplicantType] = useState('Myself')
+    const [isEmailValid, setIsEmailValid] = useState(false)
+    const [email, setEmail] = useState('')
+    const [referEmail, setReferEmail] = useState('')
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const colRef = collection(db, 'clients')
@@ -64,6 +67,15 @@ export default function NewClient({ clientID }) {
             console.log('error adding document: ', error)
         }
     }
+
+    const emailValidation = (e) => {
+        const emailValue = e.target.value
+        setEmail(emailValue)
+        const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+        const isValid = pattern.test(emailValue)
+        setIsEmailValid(isValid)
+    }
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -120,12 +132,22 @@ export default function NewClient({ clientID }) {
                                 }}>
                                     <TextField
                                         id="outlined-basic"
-                                        // label="Referrer Email"
+                                        label="Referrer Email"
                                         type="email"
                                         variant="outlined"
-                                        onChange={handleChange}
+                                        required
+                                        onChange={(e) => {
+                                            const emailValue = e.target.value;
+                                            setReferEmail(emailValue);
+                                            const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+                                            const isValid = pattern.test(emailValue);
+                                            setIsEmailValid(isValid);
+                                            handleChange(e)
+                                        }}
                                         value={client.referEmail}
                                         name="referEmail"
+                                        error={!isEmailValid}
+                                        helperText={!isEmailValid ? 'invalidemail format' : ""}
                                     />
                                 </FormControl>
                             </div>
@@ -239,9 +261,18 @@ export default function NewClient({ clientID }) {
                                 type="email"
                                 variant="outlined"
                                 required
-                                onChange={handleChange}
+                                onChange={(e) => {
+                                    const emailValue = e.target.value;
+                                    setReferEmail(emailValue);
+                                    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+                                    const isValid = pattern.test(emailValue);
+                                    setIsEmailValid(isValid);
+                                    handleChange(e)
+                                }}
                                 value={client.email}
                                 name="email"
+                                error={!isEmailValid}
+                                helperText={!isEmailValid ? 'invalid email format' : ""}
                             />
                         </FormControl>
                     </div>
