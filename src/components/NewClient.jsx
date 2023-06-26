@@ -82,7 +82,6 @@ export default function NewClient({ clientID }) {
             <Box className='new-client-form' sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                // justifyContent: 'center',
                 m: 3,
             }}>
                 <form>
