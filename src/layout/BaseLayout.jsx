@@ -7,6 +7,13 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link'
 import IconButton from '@mui/material/IconButton';
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import AdbIcon from '@mui/icons-material/Adb';
+import React, { useState } from 'react'
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const theme = createTheme({
     typography: {
@@ -18,11 +25,51 @@ const theme = createTheme({
     }
 })
 
+const pages = ['ABOUT US', 'STABILITY', 'DONATE', 'ASK FOR HELP'];
+
 const BaseLayout = (props) => {
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
     return (
         <>
             <div className='BaseLayout'>
                 <ThemeProvider theme={theme}>
+
+                {/* <Link href='https://thegivingkitchen.org/who-we-are'>ABOUT US</Link>
+                                    <Link href='https://thegivingkitchen.org/stability-network'>STABILITY NETWORK</Link>
+                                    <Link href='https://thegivingkitchen.org/give'>DONATE</Link>
+                                    <Link href='/form'>ASK FOR HELP</Link>
+
+                <Box sx={{ flexGrow: 1 }}>
+                        <AppBar className="navbar" position="static">
+                            <Toolbar>
+                                <IconButton
+                                    edge="start"
+                                    aria-label="menu"
+                                    sx={{
+                                        mr: 2,
+                                        height: 100
+                                    }}
+                                >
+                                </IconButton>
+                                <Typography className='nav' variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                    <a href='/'><img height="80px" src="https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1580762612906-BMFM6TLDZ8L03MC2R7WB/GK_Logotype.jpg?format=1500w" alt="" /></a>
+                                </Typography>
+                            </Toolbar>
+                        </AppBar> */}
+
+
+
+
                     <Box sx={{ flexGrow: 1 }}>
                         <AppBar className="navbar" position="static">
                             <Toolbar>
