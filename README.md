@@ -11,7 +11,7 @@ Giving Kitchen (GK) is a non-profit based in Atlanta, GA which provides emergenc
 - Firebase / Firestore
 - use-places-autocomplete
 
-<img width="1785" alt="image" src="https://github.com/kathryntoney/gk-form/assets/127783825/46806dfd-d2aa-4751-bb02-07e364178a8f">
+<img width="1785" alt="image" src="https://github.com/kathryntoney/gk-form/assets/127783825/3404fdbc-791c-4d28-ae58-d6e7589267c3">
 
 ## Links:
 - Final project: https://gkaskforhelp.netlify.app/
