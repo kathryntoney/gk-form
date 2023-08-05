@@ -1,4 +1,4 @@
-import { Paper, Button } from '@mui/material'
+import { Paper } from '@mui/material'
 
 function Item({ item }) {
     return (

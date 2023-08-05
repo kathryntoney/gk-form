@@ -126,7 +126,7 @@ export default function HousingCrisis() {
             <Box>
                 <br />
                 <div>
-                    <InputLabel id="applicant-type-label">Please describe your crisis in detail using the field below:</InputLabel>
+                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Please describe your crisis in detail using the field below:</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -143,7 +143,7 @@ export default function HousingCrisis() {
                 </div>
                 <br />
                 <div>
-                    <InputLabel id="applicant-type-label">Did this disaster occur within the last six months?</InputLabel>
+                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Did this disaster occur within the last six months?</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -152,11 +152,11 @@ export default function HousingCrisis() {
                             id="applicant-type-select"
                             value={updateClient.timeframe}
                             name="timeframe"
-                            label="Timeframe"
+                            // label="Timeframe"
                             onChange={handleChange}
                         >
-                            <MenuItem value="yes">Yes, within the last six months</MenuItem>
-                            <MenuItem value="no">No, it occurred more than six months ago</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="yes">Yes, within the last six months</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="no">No, it occurred more than six months ago</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
@@ -167,7 +167,7 @@ export default function HousingCrisis() {
                 {updateClient.timeframe === 'yes' && (
                     <>
                         <div>
-                            <InputLabel id="applicant-type-label">Enter the approximate date that your crisis occurred:</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Enter the approximate date that your crisis occurred:</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>
@@ -184,7 +184,7 @@ export default function HousingCrisis() {
                         </div>
                         <br />
                         <div>
-                            <InputLabel id="applicant-type-label">Which of the following best describes what happened to your housing?</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Which of the following best describes what happened to your housing?</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>
@@ -193,15 +193,15 @@ export default function HousingCrisis() {
                                     id="applicant-type-select"
                                     value={updateClient.cause}
                                     name="cause"
-                                    label="Cause of Disaster"
+                                    // label="Cause of Disaster"
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="Fire">Fire</MenuItem>
-                                    <MenuItem value="Flood">Flood</MenuItem>
-                                    <MenuItem value="Mold">Mold</MenuItem>
-                                    <MenuItem value="Tornado">Tornado</MenuItem>
-                                    <MenuItem value="Other">Other</MenuItem>
-                                    <MenuItem value="None, not experiencing a housing crisis">None, not experiencing a housing crisis</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="Fire">Fire</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="Flood">Flood</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="Mold">Mold</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="Tornado">Tornado</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="Other">Other</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="None, not experiencing a housing crisis">None, not experiencing a housing crisis</MenuItem>
                                 </Select>
                             </FormControl>
                         </div>
@@ -211,7 +211,7 @@ export default function HousingCrisis() {
                 {(updateClient.cause === 'Fire' || updateClient.cause === 'Flood' || updateClient.cause === 'Mold' || updateClient.cause === 'Tornado') && (
                     <>
                         <div>
-                            <InputLabel id="applicant-type-label">Have you found a new place to live?</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Have you found a new place to live?</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>
@@ -220,17 +220,17 @@ export default function HousingCrisis() {
                                     id="applicant-type-select"
                                     value={updateClient.currentHousing}
                                     name="currentHousing"
-                                    label="Current Housing"
+                                    // label="Current Housing"
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="Yes">Yes</MenuItem>
-                                    <MenuItem value="No">No</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="Yes">Yes</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="No">No</MenuItem>
                                 </Select>
                             </FormControl>
                         </div>
                         <br />
                         <div>
-                            <InputLabel id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>

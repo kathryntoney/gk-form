@@ -1,0 +1,44 @@
+body {
+    /* margin: 0px; */
+}
+
+.carousel {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel img {
+    max-width: 100%;
+    height: auto;
+}
+
+.num-served img {
+    max-width: 100%;
+    height: auto;
+}
+
+.BaseLayout {
+    margin: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.footer-img img {
+    /* width: 80vw; */
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    /* height: 30vh; */
+}
+
+.title {
+    margin-top: 10px;
+}
+
+.footer {
+    margin: 0px;
+    width: 100vw;
+}

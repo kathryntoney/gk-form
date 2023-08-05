@@ -87,7 +87,7 @@ export default function NewClient({ clientID }) {
                 <form>
                     <div>
 
-                        <InputLabel id="applicant type">For whom are you filling out this form?</InputLabel>
+                        <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant type">For whom are you filling out this form?</InputLabel>
                         <FormControl sx={{
                             minWidth: 300
                         }}>
@@ -98,8 +98,8 @@ export default function NewClient({ clientID }) {
                                 label="Applicant"
                                 onChange={handleApplicantTypeChange}
                             >
-                                <MenuItem value="Myself">Myself</MenuItem>
-                                <MenuItem value="Someone else">Someone else</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Myself">Myself</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Someone else">Someone else</MenuItem>
                             </Select>
                         </FormControl>
                     </div>
@@ -108,8 +108,8 @@ export default function NewClient({ clientID }) {
                     {selectedApplicantType === 'Someone else' && (
                         <>
                             <div>
-                                <Typography variant='h5'>If you are filling out this form for someone else, please enter your own contact information here:</Typography>
-                                <InputLabel>Referrer Name (first and last)</InputLabel>
+                                <Typography variant='h6'>If you are filling out this form for someone else, please enter your own contact information here:</Typography>
+                                <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1, mt: 2 }}>Referrer Name (first and last)</InputLabel>
                                 <FormControl sx={{
                                     minWidth: 300
                                 }}>
@@ -125,7 +125,7 @@ export default function NewClient({ clientID }) {
                             </div>
                             <br />
                             <div>
-                                <InputLabel>Referrer Email</InputLabel>
+                                <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }}>Referrer Email</InputLabel>
                                 <FormControl sx={{
                                     minWidth: 300
                                 }}>
@@ -152,7 +152,7 @@ export default function NewClient({ clientID }) {
                             </div>
                             <br />
                             <div>
-                                <InputLabel>Referrer Phone</InputLabel>
+                                <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }}>Referrer Phone</InputLabel>
                                 <FormControl sx={{
                                     minWidth: 300
                                 }}>
@@ -169,7 +169,7 @@ export default function NewClient({ clientID }) {
                             </div>
                             <br />
                             <div>
-                                <InputLabel id="applicant-type-label">Have you informed this person that you're referring them to GK?</InputLabel>
+                                <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Have you informed this person that you're referring them to GK?</InputLabel>
                                 <FormControl sx={{
                                     minWidth: 300
                                 }}>
@@ -181,8 +181,8 @@ export default function NewClient({ clientID }) {
                                         label="Informed"
                                         onChange={handleChange}
                                     >
-                                        <MenuItem value="Yes">Yes</MenuItem>
-                                        <MenuItem value="No">No</MenuItem>
+                                        <MenuItem sx={{ whiteSpace: 'normal' }} value="Yes">Yes</MenuItem>
+                                        <MenuItem sx={{ whiteSpace: 'normal' }} value="No">No</MenuItem>
                                     </Select>
                                 </FormControl>
                             </div>
@@ -191,7 +191,7 @@ export default function NewClient({ clientID }) {
                     )
                     }
                     <div>
-                        <InputLabel id="preferred-language">Preferred language of person in need:</InputLabel>
+                        <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="preferred-language">Preferred language of person in need:</InputLabel>
                         <FormControl sx={{
                             minWidth: 300
                         }}>
@@ -200,23 +200,23 @@ export default function NewClient({ clientID }) {
                                 id="demo-simple-select"
                                 value={client.language}
                                 name="language"
-                                label="Preferred Language"
+                                // label="Preferred Language"
                                 onChange={handleChange}
                             >
-                                <MenuItem value="English">English</MenuItem>
-                                <MenuItem value="Spanish">Spanish</MenuItem>
-                                <MenuItem value="Cantonese">Cantonese</MenuItem>
-                                <MenuItem value="Korean">Korean</MenuItem>
-                                <MenuItem value="Mandarin">Mandarin</MenuItem>
-                                <MenuItem value="Portuguese">Portuguese</MenuItem>
-                                <MenuItem value="Vietnamese">Vietnamese</MenuItem>
-                                <MenuItem value="Other">Other</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="English">English</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Spanish">Spanish</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Cantonese">Cantonese</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Korean">Korean</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Mandarin">Mandarin</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Portuguese">Portuguese</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Vietnamese">Vietnamese</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Other">Other</MenuItem>
                             </Select>
                         </FormControl>
                     </div>
                     <br />
                     <div>
-                        <InputLabel>Applicant's First Name</InputLabel>
+                        <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }}>Applicant's First Name</InputLabel>
                         <FormControl sx={{
                             minWidth: 300
                         }}>
@@ -233,7 +233,7 @@ export default function NewClient({ clientID }) {
                     </div>
                     <br />
                     <div>
-                        <InputLabel>Applicant's Last Name</InputLabel>
+                        <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }}>Applicant's Last Name</InputLabel>
                         <FormControl sx={{
                             minWidth: 300
                         }}>
@@ -250,7 +250,7 @@ export default function NewClient({ clientID }) {
                     </div>
                     <br />
                     <div>
-                        <InputLabel>Applicant's Email</InputLabel>
+                        <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }}>Applicant's Email</InputLabel>
                         <FormControl sx={{
                             minWidth: 300
                         }}>
@@ -277,7 +277,7 @@ export default function NewClient({ clientID }) {
                     </div>
                     <br />
                     <div>
-                        <InputLabel>Applicant's Phone Number</InputLabel>
+                        <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }}>Applicant's Phone Number</InputLabel>
                         <FormControl sx={{
                             minWidth: 300
                         }}>
@@ -295,7 +295,7 @@ export default function NewClient({ clientID }) {
                     </div>
                     <br />
                     <div>
-                        <InputLabel id="preferred-pronouns">Preferred pronouns:</InputLabel>
+                        <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="preferred-pronouns">Preferred pronouns:</InputLabel>
                         <FormControl sx={{
                             minWidth: 300
                         }}>
@@ -304,13 +304,13 @@ export default function NewClient({ clientID }) {
                                 id="demo-simple-select"
                                 value={client.pronouns}
                                 name="pronouns"
-                                label="Preferred Pronouns"
+                                // label="Preferred Pronouns"
                                 onChange={handleChange}
                             >
-                                <MenuItem value="She/her/hers">She/her/hers</MenuItem>
-                                <MenuItem value="He/Him/his">He/Him/his</MenuItem>
-                                <MenuItem value="They/them/theirs">They/them/theirs</MenuItem>
-                                <MenuItem value="Other">Other</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="She/her/hers">She/her/hers</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="He/Him/his">He/Him/his</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="They/them/theirs">They/them/theirs</MenuItem>
+                                <MenuItem sx={{ whiteSpace: 'normal' }} value="Other">Other</MenuItem>
                             </Select>
                         </FormControl>
                     </div>

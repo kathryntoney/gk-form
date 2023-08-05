@@ -1,126 +1,131 @@
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import { Container, Grid } from '@mui/material'
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link'
-import IconButton from '@mui/material/IconButton';
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import AdbIcon from '@mui/icons-material/Adb';
 import React, { useState } from 'react'
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import Avatar from '@mui/material/Avatar';
-import Menu from '@mui/material/Menu';
+import { Paper, SwipeableDrawer, Divider, Toolbar, Hidden, Box, AppBar, Typography, IconButton, List, ListItem } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import '../components/styles.css'
 
-const theme = createTheme({
-    typography: {
-        allVariants: {
-            fontFamily: ['Roboto Mono', 'monospace'].join(','),
-            color: '#2a4988',
-            textDecoration: 'none'
-        }
-    }
-})
-
-const pages = ['ABOUT US', 'STABILITY', 'DONATE', 'ASK FOR HELP'];
+const links = [
+    { name: 'ABOUT US', href: 'https://thegivingkitchen.org/who-we-are' },
+    { name: 'STABILITY NETWORK', href: 'https://thegivingkitchen.org/stability-network' },
+    { name: 'DONATE', href: 'https://thegivingkitchen.org/give' },
+    { name: 'ASK FOR HELP', href: '/form' }
+];
 
 const BaseLayout = (props) => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+    const [open, setOpen] = useState(false)
 
     return (
         <>
             <div className='BaseLayout'>
-                <ThemeProvider theme={theme}>
-
-                {/* <Link href='https://thegivingkitchen.org/who-we-are'>ABOUT US</Link>
-                                    <Link href='https://thegivingkitchen.org/stability-network'>STABILITY NETWORK</Link>
-                                    <Link href='https://thegivingkitchen.org/give'>DONATE</Link>
-                                    <Link href='/form'>ASK FOR HELP</Link>
-
                 <Box sx={{ flexGrow: 1 }}>
-                        <AppBar className="navbar" position="static">
-                            <Toolbar>
-                                <IconButton
-                                    edge="start"
-                                    aria-label="menu"
-                                    sx={{
-                                        mr: 2,
-                                        height: 100
-                                    }}
-                                >
+                    <AppBar className="navbar" position="static">
+                        <Toolbar sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between'
+                        }}>
+                            <IconButton
+                                edge="start"
+                                aria-label="menu"
+                                sx={{
+                                    mr: 2,
+                                    mt: 1
+                                }}
+                            >
+                                <a href='/'><img height="50vh" src="https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1580762612906-BMFM6TLDZ8L03MC2R7WB/GK_Logotype.jpg?format=1500w" alt="" /></a>
+                            </IconButton>
+                            <Hidden lgDown>
+                                {links.map((item) => (
+                                    <Typography
+                                        key={item.name}
+                                        component="a"
+                                        href={item.href}
+                                        sx={{
+                                            fontFamily: ['Roboto Mono', 'monospace'].join(','),
+                                            color: '#2a4988',
+                                            textDecoration: 'none',
+                                            fontSize: '1.5em'
+                                        }}
+                                    >
+                                        {item.name}
+                                    </Typography>
+                                ))}
+                            </Hidden>
+                            <Hidden lgUp>
+                                <IconButton>
+                                    <MenuIcon onClick={() => setOpen(true)} />
                                 </IconButton>
-                                <Typography className='nav' variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                    <a href='/'><img height="80px" src="https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1580762612906-BMFM6TLDZ8L03MC2R7WB/GK_Logotype.jpg?format=1500w" alt="" /></a>
-                                </Typography>
-                            </Toolbar>
-                        </AppBar> */}
-
-
-
-
-                    <Box sx={{ flexGrow: 1 }}>
-                        <AppBar className="navbar" position="static">
-                            <Toolbar>
-                                <IconButton
-                                    edge="start"
-                                    aria-label="menu"
-                                    sx={{
-                                        mr: 2,
-                                        height: 100
-                                    }}
-                                >
-                                    <a href='/'><img height="80px" src="https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1580762612906-BMFM6TLDZ8L03MC2R7WB/GK_Logotype.jpg?format=1500w" alt="" /></a>
+                            </Hidden>
+                        </Toolbar>
+                        <SwipeableDrawer anchor="right" open={open} onOpen={() => setOpen(true)} onClose={() => setOpen(false)}>
+                            <div>
+                                <IconButton>
+                                    <ChevronRightIcon onClick={() => setOpen(false)} />
                                 </IconButton>
-                                <Typography className='nav' variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                    <Link href='https://thegivingkitchen.org/who-we-are'>ABOUT US</Link>
-                                    <Link href='https://thegivingkitchen.org/stability-network'>STABILITY NETWORK</Link>
-                                    <Link href='https://thegivingkitchen.org/give'>DONATE</Link>
-                                    <Link href='/form'>ASK FOR HELP</Link>
-                                </Typography>
-                            </Toolbar>
-                        </AppBar>
+                            </div>
+                            <Divider />
+                            <List>
+                                {links.map((item) => (
+                                    <ListItem key={item.name} >
+                                        <Typography
+                                            key={item.name}
+                                            component="a"
+                                            href={item.href}
+                                            sx={{
+                                                fontFamily: ['Roboto Mono', 'monospace'].join(','),
+                                                color: '#2a4988',
+                                                textDecoration: 'none'
+                                            }}
+                                        >
+                                            {item.name}
+                                        </Typography>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </SwipeableDrawer>
+                    </AppBar>
+                </Box>
+                <Box className='content' style={{ flexGrow: 1 }}>
+                    {props.children}
+                </Box>
+                <br />
+                <br />
+                <Paper className='footer' sx={{
+                    backgroundColor: '#2a4988',
+                    ml: '-8px',
+                    padding: '5px',
+                    marginTop: 'calc(10% + 60px)'
+                    // position: 'fixed',
+                    // bottom: 0 
+                }}>
+                    <Typography
+                        sx={{
+                            color: 'white',
+                            fontFamily: ['Roboto Mono', 'monospace'].join(','),
+                            fontSize: '20px'
+                        }}
+                    >
+                        WE ARE GIVING KITCHEN.
+                    </Typography>
+                    <Typography
+                        sx={{
+                            color: 'white',
+                            fontFamily: ['Roboto Mono', 'monospace'].join(','),
+                            fontSize: '20px'
+                        }}
+                    >
+                        WE HELP FOOD SERVICE WORKERS.
+                    </Typography>
+                    <Box className='footer-img' sx={{ 
+                        backgroundColor: '#2a4988',
+                        padding: '2px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        // width: '100%'
+                        // height: '20%'
+                        }}>
+                        <img src="https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1616001978701-3VRESJHXEYB8DXO7R9N4/award-logos.png?format=750w" alt="awards" />
                     </Box>
-                    <div className='content' style={{ flexGrow: 1 }}>
-                        {props.children}
-                    </div>
-                    <br />
-                    <br />
-                    <ThemeProvider theme={theme}>
-                        <Box className='footer-container'>
-                            {/* <Container maxWidth="lg"> */}
-                            <Grid container direction="column" className='grid'>
-                                <Grid className='grid-top' item xs={12}>
-                                    <Typography color="white" variant='h4'>
-                                        WE ARE GIVING KITCHEN.
-                                    </Typography>
-                                    <Typography color="white" variant='h4'>
-                                        WE HELP FOOD SERVICE WORKERS.
-                                    </Typography>
-                                </Grid>
-                                <Grid className='grid-bottom' item xs={12}>
-                                    {/* <Typography color="white" variant="subtitle1">
-                                    test
-                                </Typography> */}
-                                    <img src="https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/1616001978701-3VRESJHXEYB8DXO7R9N4/award-logos.png?format=750w" alt="" />
-                                </Grid>
-                            </Grid>
-                            {/* </Container> */}
-                        </Box>
-                    </ThemeProvider>
-
-                </ThemeProvider>
+                </Paper>
             </div>
         </>
     )
