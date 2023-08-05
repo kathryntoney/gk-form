@@ -42,7 +42,7 @@ export const setIllnessCrisisDetails = (clientID, crisisType, statement, diagnos
     }
 }
 
-export const setFuneralCrisisDetails = (clientID, crisisType, statement, diagnosis, crisisDate, address) => {
+export const setFuneralCrisisDetails = (clientID, crisisType, statement, timeframe, crisisDate, address) => {
     console.log(clientID)
     return {
         type: 'SET_FUNERAL_CRISIS_DETAILS',

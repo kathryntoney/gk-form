@@ -12,7 +12,7 @@ import { db } from '../firebase'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { setIllnessCrisisDetails } from '../actions/crisisActions';
+import { setFuneralCrisisDetails } from '../actions/crisisActions';
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
@@ -123,7 +123,7 @@ export default function FuneralCrisis() {
         <>
             <Box>
                 <div>
-                    <InputLabel id="applicant-type-label">Please provide as many details as you are able about the funeral arrangements you had to make:</InputLabel>
+                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Please provide as many details as you are able about the funeral arrangements you had to make:</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -137,7 +137,7 @@ export default function FuneralCrisis() {
                             name="statement"
                         />
                     </FormControl>
-                    <InputLabel id="applicant-type-label">What is the applicant's relationship to the deceased?</InputLabel>
+                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">What is the applicant's relationship to the deceased?</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -146,16 +146,16 @@ export default function FuneralCrisis() {
                             id="applicant-type-select"
                             value={updateClient.relationship}
                             name="relationship"
-                            label="Relationship"
+                            // label="Relationship"
                             onChange={handleChange}
                         >
-                            <MenuItem value="Parent/Guardian">Parent/Guardian</MenuItem>
-                            <MenuItem value="Grandparent">Grandparent</MenuItem>
-                            <MenuItem value="Spouse/Partner">Spouse/Partner</MenuItem>
-                            <MenuItem value="Child">Child</MenuItem>
-                            <MenuItem value="Sibling">Sibling</MenuItem>
-                            <MenuItem value="Grandchild">Grandchild</MenuItem>
-                            <MenuItem value="Other">Other</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Parent/Guardian">Parent/Guardian</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Grandparent">Grandparent</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Spouse/Partner">Spouse/Partner</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Child">Child</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Sibling">Sibling</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Grandchild">Grandchild</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Other">Other</MenuItem>
 
                         </Select>
                     </FormControl>
@@ -168,7 +168,7 @@ export default function FuneralCrisis() {
                     )}
                     {updateClient.relationship !== "Other" && (
                         <>
-                            <InputLabel id="applicant-type-label">Did your family member pass within the last six months?</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Did your family member pass within the last six months?</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>
@@ -180,8 +180,8 @@ export default function FuneralCrisis() {
                                     label="Timeframe"
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="Yes">Yes, within the last six months</MenuItem>
-                                    <MenuItem value="No">No, it occurred more than six months ago</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="Yes">Yes, within the last six months</MenuItem>
+                                    <MenuItem sx={{ whiteSpace: 'normal' }} value="No">No, it occurred more than six months ago</MenuItem>
                                 </Select>
                             </FormControl>
                             {updateClient.timeframe === "No" && (
@@ -191,7 +191,7 @@ export default function FuneralCrisis() {
                             )}
                             {updateClient.timeframe === "Yes" && (
                                 <>
-                                    <InputLabel id="applicant-type-label">Enter the date that your family member passed:</InputLabel>
+                                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Enter the date that your family member passed:</InputLabel>
                                     <FormControl sx={{
                                         minWidth: 300
                                     }}>
@@ -205,7 +205,7 @@ export default function FuneralCrisis() {
                                             name="crisisDate"
                                         />
                                     </FormControl>
-                                    <InputLabel id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
+                                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
                                     <FormControl sx={{
                                         minWidth: 300
                                     }}>

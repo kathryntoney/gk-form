@@ -82,12 +82,14 @@ export default function CrisisSelection() {
                     <form>
                         <Box sx={{
                             display: 'flex',
+                            flexWrap: 'wrap',
+                            whiteSpace: 'pre-wrap',
                             justifyContent: 'center',
-                            m: 3
+                            mb: 3
                         }}>
-                            <Typography className='title' variant='h2'>Ask for Help Form</Typography>
+                            <Typography className='title' variant='h4'>Ask for Help Form</Typography>
                         </Box>
-                        <InputLabel id="preferred-language">Which of the following categories best describes the crisis you (or the person you are referring) are experiencing?</InputLabel>
+                        <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="preferred-language">Which of the following categories best describes the crisis you (or the person you are referring) are experiencing?</InputLabel>
                         <FormControl sx={{
                             minWidth: 300
                         }}>
@@ -96,7 +98,7 @@ export default function CrisisSelection() {
                                 id="demo-simple-select"
                                 value={crisisType}
                                 name="crisisType"
-                                label="Crisis Type"
+                                // label="Crisis Type"
                                 onChange={handleSetCrisisType}
                             >
                                 <MenuItem value="Housing disaster">Housing disaster</MenuItem>

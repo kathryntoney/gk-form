@@ -4,7 +4,7 @@ import pics from '../data/pics.json'
 
 function GKCarousel() {
     return (
-        <Carousel className='carousel'>
+        <Carousel className='carousel' >
             {
                 pics.map(item => <CarItems key={item.id} item={item} />)
             }

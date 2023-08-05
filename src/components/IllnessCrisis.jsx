@@ -121,7 +121,7 @@ export default function IllnessCrisis() {
         <>
             <Box>
                 <div>
-                    <InputLabel id="applicant-type-label">Please describe your injury / illness crisis in detail using the field below:</InputLabel>
+                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Please describe your injury / illness crisis in detail using the field below:</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -135,7 +135,7 @@ export default function IllnessCrisis() {
                             name="statement"
                         />
                     </FormControl>
-                    <InputLabel id="applicant-type-label">Did you receive a medical diagnosis for this injury or condition?</InputLabel>
+                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Did you receive a medical diagnosis for this injury or condition?</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -144,11 +144,11 @@ export default function IllnessCrisis() {
                             id="applicant-type-select"
                             value={updateClient.diagnosis}
                             name="diagnosis"
-                            label="Diagnosis"
+                            // label="Diagnosis"
                             onChange={handleChange}
                         >
-                            <MenuItem value="Yes">Yes, within the last six months</MenuItem>
-                            <MenuItem value="No">No, it occurred more than six months ago</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Yes">Yes, I have a diagnosis from a physician</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="No">No, I do not have a diagnosis</MenuItem>
                         </Select>
                     </FormControl>
                     {updateClient.diagnosis === 'No' && (
@@ -158,7 +158,7 @@ export default function IllnessCrisis() {
                     )}
                     {updateClient.diagnosis === "Yes" && (
                         <>
-                            <InputLabel id="applicant-type-label">Enter the approximate date that your crisis occurred:</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Enter the approximate date that your crisis occurred:</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>
@@ -172,7 +172,7 @@ export default function IllnessCrisis() {
                                     name="crisisDate"
                                 />
                             </FormControl>
-                            <InputLabel id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>

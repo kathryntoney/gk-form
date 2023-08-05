@@ -121,7 +121,7 @@ export default function SubstanceCrisis() {
         <>
             <Box>
                 <div>
-                    <InputLabel id="applicant-type-label">Please provide as many details as you are able about the substance issues you are facing:</InputLabel>
+                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Please provide as many details as you are able about the substance issues you are facing:</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -135,7 +135,7 @@ export default function SubstanceCrisis() {
                             name="statement"
                         />
                     </FormControl>
-                    <InputLabel id="applicant-type-label">Did the applicant enter or complete a treatment program within the last six months?</InputLabel>
+                    <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Did the applicant enter or complete a treatment program within the last six months?</InputLabel>
                     <FormControl sx={{
                         minWidth: 300
                     }}>
@@ -147,8 +147,8 @@ export default function SubstanceCrisis() {
                             label="Treatment"
                             onChange={handleChange}
                         >
-                            <MenuItem value="Yes">Yes</MenuItem>
-                            <MenuItem value="No">No</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="Yes">Yes</MenuItem>
+                            <MenuItem sx={{ whiteSpace: 'normal' }} value="No">No</MenuItem>
                         </Select>
                     </FormControl>
                     {updateClient.treatment === 'No' && (
@@ -160,7 +160,7 @@ export default function SubstanceCrisis() {
                     )}
                     {updateClient.treatment === "Yes" && (
                         <>
-                            <InputLabel id="applicant-type-label">Enter the date that the applicant entered or completed a treatment program:</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Enter the date that the applicant entered or completed a treatment program:</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>
@@ -174,7 +174,7 @@ export default function SubstanceCrisis() {
                                     name="crisisDate"
                                 />
                             </FormControl>
-                            <InputLabel id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
+                            <InputLabel sx={{ display: 'flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', mb: 1 }} id="applicant-type-label">Enter your address and select the correct option, then click "Exit":</InputLabel>
                             <FormControl sx={{
                                 minWidth: 300
                             }}>
