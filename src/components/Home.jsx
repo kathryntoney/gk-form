@@ -8,7 +8,10 @@ export default function Home() {
         <>
             <GKCarousel />
             <div className='num-served'>
-                <img className='num-img' src="https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/9bfe7e22-5b0d-447c-9cde-ae761eee47c5/website+counter.png?format=2500w" alt="" />
+                <img className='num-img' sx={{
+                    width: '200px'
+                }}
+                    src="https://images.squarespace-cdn.com/content/v1/59ef9a244c0dbf3814d94d38/0407f8e1-6260-40ed-9c90-77d4a259a592/website+counter.png?format=2500w" alt="" />
                 <Typography sx={{
                     color: '#ee6d4e',
                     fontWeight: 'bold',
